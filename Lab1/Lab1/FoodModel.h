@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @property (strong, nonatomic) NSArray* foodNames;
-@property (strong, nonatomic) NSDictionary* foodDict;
+@property (strong, nonatomic) NSMutableDictionary* foodDict;
 
 @end
 

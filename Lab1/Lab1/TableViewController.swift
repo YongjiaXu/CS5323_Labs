@@ -24,6 +24,10 @@ class TableViewController: UITableViewController, ViewControllerDelegate {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
+    var cart:Array<Array<String>> = []
+    var totaltime:Int = 0
+    
+    
     lazy var foodModel:FoodModel = {
         return FoodModel.sharedInstance()
     }()
@@ -102,13 +106,21 @@ class TableViewController: UITableViewController, ViewControllerDelegate {
                     vc.displayFoodName = name
                     vc.delegate = self
             }
+        
+            else if let vc = segue.destination as? CheckoutViewController {
+                vc.Result = cart
+                vc.finalTime = totaltime
+                cart = []
+            }
         }
     
     
     
-    func CatchResult(controller: ViewController,  data: String){
-        self.testnum = data
-        print(testnum)
+    func CatchResult(controller: ViewController,  data: Array<String>){
+        let newdish: Array<String> = [data[0], data[1], data[2]]
+        let temptime: Int = Int(data[3]) ?? 0
+        totaltime = totaltime + temptime
+        cart.append(newdish)
     }
     
 

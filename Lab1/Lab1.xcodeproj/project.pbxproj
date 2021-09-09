@@ -16,6 +16,8 @@
 		C217767926E70313004AD3C8 /* Lab1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217767826E70313004AD3C8 /* Lab1Tests.swift */; };
 		C217768426E70313004AD3C8 /* Lab1UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217768326E70313004AD3C8 /* Lab1UITests.swift */; };
 		C2B701A626E98ED8007E4B31 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B701A526E98ED8007E4B31 /* ImageViewController.swift */; };
+		CC7FBD9026E9DE95004A6A50 /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7FBD8F26E9DE95004A6A50 /* CheckoutViewController.swift */; };
+		CC7FBD9226EA046C004A6A50 /* FoodName.csv in Resources */ = {isa = PBXBuildFile; fileRef = CC7FBD9126EA046C004A6A50 /* FoodName.csv */; };
 		CCABC44D26E85E6D00C209B8 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCABC44C26E85E6D00C209B8 /* TableViewController.swift */; };
 		CCABC45126E85FC100C209B8 /* FoodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CCABC45026E85FC100C209B8 /* FoodModel.m */; };
 /* End PBXBuildFile section */
@@ -53,6 +55,8 @@
 		C217768326E70313004AD3C8 /* Lab1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lab1UITests.swift; sourceTree = "<group>"; };
 		C217768526E70313004AD3C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C2B701A526E98ED8007E4B31 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		CC7FBD8F26E9DE95004A6A50 /* CheckoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutViewController.swift; sourceTree = "<group>"; };
+		CC7FBD9126EA046C004A6A50 /* FoodName.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FoodName.csv; sourceTree = "<group>"; };
 		CCABC44C26E85E6D00C209B8 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		CCABC44E26E85FC000C209B8 /* Lab1-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lab1-Bridging-Header.h"; sourceTree = "<group>"; };
 		CCABC44F26E85FC100C209B8 /* FoodModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FoodModel.h; sourceTree = "<group>"; };
@@ -111,7 +115,9 @@
 				C217766326E70309004AD3C8 /* SceneDelegate.swift */,
 				C217766526E70309004AD3C8 /* ViewController.swift */,
 				C2B701A526E98ED8007E4B31 /* ImageViewController.swift */,
+				CC7FBD9126EA046C004A6A50 /* FoodName.csv */,
 				C217766726E70309004AD3C8 /* Main.storyboard */,
+				CC7FBD8F26E9DE95004A6A50 /* CheckoutViewController.swift */,
 				CCABC44F26E85FC100C209B8 /* FoodModel.h */,
 				CCABC45026E85FC100C209B8 /* FoodModel.m */,
 				CCABC44C26E85E6D00C209B8 /* TableViewController.swift */,
@@ -248,6 +254,7 @@
 				C217766E26E70313004AD3C8 /* LaunchScreen.storyboard in Resources */,
 				C217766B26E70313004AD3C8 /* Assets.xcassets in Resources */,
 				C217766926E70309004AD3C8 /* Main.storyboard in Resources */,
+				CC7FBD9226EA046C004A6A50 /* FoodName.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +285,7 @@
 				CCABC44D26E85E6D00C209B8 /* TableViewController.swift in Sources */,
 				C2B701A626E98ED8007E4B31 /* ImageViewController.swift in Sources */,
 				CCABC45126E85FC100C209B8 /* FoodModel.m in Sources */,
+				CC7FBD9026E9DE95004A6A50 /* CheckoutViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

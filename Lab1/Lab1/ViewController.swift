@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ViewControllerDelegate : NSObjectProtocol {
-    func CatchResult(controller:ViewController, data:String)
+    func CatchResult(controller:ViewController, data:Array<String>)
 }
 
 
@@ -19,7 +19,9 @@ class ViewController: UIViewController  {
     var delegate: ViewControllerDelegate?
     
     
-    
+    var timer = Timer()
+    var isTimerRunning = false
+    var timeinsec = 0;
     
     
     lazy var foodModel:FoodModel = {
@@ -45,7 +47,12 @@ class ViewController: UIViewController  {
     
     
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
-        valueLabel.text = "Value: " + Int(sender.value).description
+        valueLabel.text = "Amount: " + Int(sender.value).description
+    }
+    
+    
+    @objc func updateTimer() {
+        timeinsec = timeinsec + 1
     }
     
     
@@ -56,6 +63,8 @@ class ViewController: UIViewController  {
         
         self.slider.minimumValueImage = UIImage.init(named: "mild")
         self.slider.maximumValueImage = UIImage.init(named: "hot")
+        self.slider.maximumValue = 3
+        self.slider.minimumValue = 0
         
         self.stepper.wraps = true;
         self.stepper.autorepeat = true;
@@ -65,6 +74,7 @@ class ViewController: UIViewController  {
         imageView.addGestureRecognizer(tapGesture)
         imageView.isUserInteractionEnabled = true
         
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(ViewController.updateTimer)), userInfo: nil, repeats: true)
         
     }
 
@@ -84,8 +94,14 @@ class ViewController: UIViewController  {
     
     @IBAction func Goback(_ sender: Any) {
         if((delegate) != nil){
-            delegate?.CatchResult(controller: self, data: displayFoodName)
+            var newspicy = self.slider.value
+            newspicy = Float(round(10*newspicy)/10)
+            timer.invalidate()
+
+            let newarray = [displayFoodName, newspicy.description, self.stepper.value.description, self.timeinsec.description]
+            delegate?.CatchResult(controller: self, data: newarray)
             self.navigationController?.popViewController(animated: true)
+        
         }
     }
 }

@@ -26,15 +26,26 @@
 }
 
 -(NSArray*) foodNames{
-    if(!_foodNames){
+    /*if(!_foodNames){
         _foodNames = @[@"Crispy-Duck", @"Hot-Pot", @"Kong-Bao-Chicken", @"Spicy-Fish", @"Stir-Fry-Pot", @"Sweet-Ribs"];
+    }*/
+    NSString *strPath = [[NSBundle mainBundle] pathForResource:@"FoodName"ofType:@"csv"];
+    NSString *strFile = [NSString stringWithContentsOfFile:strPath encoding:NSUTF8StringEncoding error:nil];
+    if(!strFile){
+        NSLog(@"Error reading file.");
     }
+    
+    _foodNames = [[NSArray alloc] init];
+    _foodNames = [strFile componentsSeparatedByString:@"\r"];
+    
     return _foodNames;
 }
 
 
--(NSDictionary*) foodDict{
+-(NSMutableDictionary*) foodDict{
+    
     if(!_foodDict){
+        /*
         _foodDict = @{@"Crispy-Duck":[UIImage imageNamed:@"Crispy-Duck"],
                        @"Hot-Pot":[UIImage imageNamed:@"Hot-Pot"],
                        @"Kong-Bao-Chicken":[UIImage imageNamed:@"Kong-Bao-Chicken"],
@@ -43,7 +54,19 @@
                       @"Sweet-Ribs":[UIImage imageNamed:@"Sweet-Ribs"]
                       
                       
-        };
+        };*/
+    NSString *strPath = [[NSBundle mainBundle] pathForResource:@"FoodName"ofType:@"csv"];
+    NSString *strFile = [NSString stringWithContentsOfFile:strPath encoding:NSUTF8StringEncoding error:nil];
+    if(!strFile){
+        NSLog(@"Error reading file.");
+    }
+    
+   NSArray* dishNames = [[NSArray alloc] init];
+    dishNames = [strFile componentsSeparatedByString:@"\r"];
+    _foodDict = [[NSMutableDictionary alloc]init];
+    for(NSString *mulName in dishNames){
+        [_foodDict setValue:[UIImage imageNamed:mulName] forKey:mulName];
+    }
     }
     return _foodDict;
 }
