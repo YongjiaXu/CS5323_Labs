@@ -61,15 +61,25 @@ class ViewController: UIViewController  {
         self.stepper.autorepeat = true;
         self.stepper.maximumValue = 100;
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped(gesture:)))
+        imageView.addGestureRecognizer(tapGesture)
+        imageView.isUserInteractionEnabled = true
         
         
-        
-        // Do any additional setup after loading the view.
     }
 
-    
-    
-    
+    @objc func imageTapped(gesture: UIGestureRecognizer) {
+            if (gesture.view as? UIImageView) != nil {
+                print("Image Tapped")
+                guard let vc = storyboard?.instantiateViewController(identifier: "image_vc") as? ImageViewController else {
+                    return
+                }
+                vc.displayFoodName = displayFoodName
+                present(vc, animated: true)
+                // referenced: https://www.youtube.com/watch?v=AiKBxiHdFYo&ab_channel=CodeWithChris
+                // https://stackoverflow.com/questions/29202882/how-do-you-make-an-uiimageview-on-the-storyboard-clickable-swift
+            }
+        }
     
     
     @IBAction func Goback(_ sender: Any) {
