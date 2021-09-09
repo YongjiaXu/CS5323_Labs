@@ -37,16 +37,20 @@ class TableViewController: UITableViewController, ViewControllerDelegate {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        if section == 0{
         return self.foodModel.foodNames.count
+        }
+        return 1
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0{
         let cell = tableView.dequeueReusableCell(withIdentifier: "FoodNameCell", for: indexPath)
 
         // Configure the cell...
@@ -54,6 +58,15 @@ class TableViewController: UITableViewController, ViewControllerDelegate {
             cell.textLabel!.text = name
         }
         return cell
+        }else{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CollectiveCell", for: indexPath)
+
+            // Configure the cell...
+            cell.textLabel?.text = "All Food Images"
+            cell.detailTextLabel?.text = "summary"
+            
+            return cell
+        }
     }
     
 

@@ -36,7 +36,7 @@
     }
     
     _foodNames = [[NSArray alloc] init];
-    _foodNames = [strFile componentsSeparatedByString:@"\r"];
+    _foodNames = [strFile componentsSeparatedByString:@"\r\r"];
     
     return _foodNames;
 }
@@ -62,7 +62,7 @@
     }
     
    NSArray* dishNames = [[NSArray alloc] init];
-    dishNames = [strFile componentsSeparatedByString:@"\r"];
+    dishNames = [strFile componentsSeparatedByString:@"\r\r"];
     _foodDict = [[NSMutableDictionary alloc]init];
     for(NSString *mulName in dishNames){
         [_foodDict setValue:[UIImage imageNamed:mulName] forKey:mulName];

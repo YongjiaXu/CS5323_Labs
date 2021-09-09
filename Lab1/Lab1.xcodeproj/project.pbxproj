@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A3851DF826EABD0B00FFEA4A /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3851DF726EABD0B00FFEA4A /* CollectionViewController.swift */; };
+		A3851DFA26EABE9700FFEA4A /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3851DF926EABE9700FFEA4A /* CollectionViewCell.swift */; };
 		C217766226E70309004AD3C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217766126E70309004AD3C8 /* AppDelegate.swift */; };
 		C217766426E70309004AD3C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217766326E70309004AD3C8 /* SceneDelegate.swift */; };
 		C217766626E70309004AD3C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217766526E70309004AD3C8 /* ViewController.swift */; };
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A3851DF726EABD0B00FFEA4A /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		A3851DF926EABE9700FFEA4A /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		C217765E26E70309004AD3C8 /* Lab1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lab1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C217766126E70309004AD3C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C217766326E70309004AD3C8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +121,8 @@
 				C2B701A526E98ED8007E4B31 /* ImageViewController.swift */,
 				CC7FBD9126EA046C004A6A50 /* FoodName.csv */,
 				C217766726E70309004AD3C8 /* Main.storyboard */,
+				A3851DF926EABE9700FFEA4A /* CollectionViewCell.swift */,
+				A3851DF726EABD0B00FFEA4A /* CollectionViewController.swift */,
 				CC7FBD8F26E9DE95004A6A50 /* CheckoutViewController.swift */,
 				CCABC44F26E85FC100C209B8 /* FoodModel.h */,
 				CCABC45026E85FC100C209B8 /* FoodModel.m */,
@@ -281,8 +287,10 @@
 			files = (
 				C217766626E70309004AD3C8 /* ViewController.swift in Sources */,
 				C217766226E70309004AD3C8 /* AppDelegate.swift in Sources */,
+				A3851DFA26EABE9700FFEA4A /* CollectionViewCell.swift in Sources */,
 				C217766426E70309004AD3C8 /* SceneDelegate.swift in Sources */,
 				CCABC44D26E85E6D00C209B8 /* TableViewController.swift in Sources */,
+				A3851DF826EABD0B00FFEA4A /* CollectionViewController.swift in Sources */,
 				C2B701A626E98ED8007E4B31 /* ImageViewController.swift in Sources */,
 				CCABC45126E85FC100C209B8 /* FoodModel.m in Sources */,
 				CC7FBD9026E9DE95004A6A50 /* CheckoutViewController.swift in Sources */,
