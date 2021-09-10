@@ -13,6 +13,7 @@ protocol ViewControllerDelegate : NSObjectProtocol {
 
 
 extension UIImage{
+    //"https://blog.csdn.net/mo_xiao_mo/article/details/52612549"
     func reSizeImage(reSize: CGSize)-> UIImage {
         UIGraphicsBeginImageContextWithOptions(reSize, false, UIScreen.main.scale);
         self .draw( in: CGRect (x:0, y:0, width: reSize.width, height: reSize.height));

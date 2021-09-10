@@ -12,11 +12,13 @@ class CheckoutViewController: UIViewController {
     var Result:Array<Array<String>> = []
     var finalTime:Int = 0
     
-    
-    
+    @IBOutlet var picker: UIPickerView!
+    let sauces = ["None", "Sweet and sour", "Alfredo", "Soy sauce", "Chili Garlic", "Teriyaki"]
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        picker.dataSource = self
+        picker.delegate = self
         var total = "Item   Spicy   Amount\n"
         for dish in Result{
             for item in dish{
@@ -55,5 +57,21 @@ class CheckoutViewController: UIViewController {
     @IBAction func GoHome(_ sender: UIButton) {
         self.Result = []
         self.navigationController?.popToRootViewController(animated: true)
+    }
+}
+
+extension CheckoutViewController: UIPickerViewDataSource{
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return sauces.count
+    }
+}
+
+extension CheckoutViewController: UIPickerViewDelegate{
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return sauces[row]
     }
 }
