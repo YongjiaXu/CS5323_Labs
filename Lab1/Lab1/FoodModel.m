@@ -11,6 +11,8 @@
 
 @synthesize foodNames = _foodNames;
 @synthesize foodDict = _foodDict;
+@synthesize foodCal = _foodCal;
+
 
 
 +(FoodModel*)sharedInstance{
@@ -36,7 +38,7 @@
     }
     
     _foodNames = [[NSArray alloc] init];
-    _foodNames = [strFile componentsSeparatedByString:@"\r\r"];
+    _foodNames = [strFile componentsSeparatedByString:@"\r"];
     
     return _foodNames;
 }
@@ -62,13 +64,32 @@
     }
     
    NSArray* dishNames = [[NSArray alloc] init];
-    dishNames = [strFile componentsSeparatedByString:@"\r\r"];
+    dishNames = [strFile componentsSeparatedByString:@"\r"];
     _foodDict = [[NSMutableDictionary alloc]init];
     for(NSString *mulName in dishNames){
         [_foodDict setValue:[UIImage imageNamed:mulName] forKey:mulName];
     }
     }
     return _foodDict;
+}
+
+
+-(NSArray*) foodCal{
+    
+    NSString *strPath = [[NSBundle mainBundle] pathForResource:@"FoodCal"ofType:@"csv"];
+    NSString *strFile = [NSString stringWithContentsOfFile:strPath encoding:NSUTF8StringEncoding error:nil];
+    if(!strFile){
+        NSLog(@"Error reading file.");
+    }
+    
+    _foodCal = [[NSArray alloc] init];
+    _foodCal = [strFile componentsSeparatedByString:@"\r"];
+    
+    for(NSString *mulName in _foodCal){
+        printf("%s", mulName);
+    }
+    
+    return _foodCal;
 }
 
 

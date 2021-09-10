@@ -22,8 +22,14 @@ NS_ASSUME_NONNULL_BEGIN
 -(NSString*)getFoodNameForIndex:(NSInteger)index;
 
 
+
+
+
 @property (strong, nonatomic) NSArray* foodNames;
 @property (strong, nonatomic) NSMutableDictionary* foodDict;
+@property (strong, nonatomic) NSArray* foodCal;
+
+
 
 @end
 

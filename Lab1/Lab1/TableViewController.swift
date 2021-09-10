@@ -43,7 +43,7 @@ class TableViewController: UITableViewController, ViewControllerDelegate {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if section == 0{
-        return self.foodModel.foodNames.count
+        return self.foodModel.foodNames.count - 1
         }
         return 1
     }
