@@ -37,7 +37,7 @@ class TableViewController: UITableViewController, ViewControllerDelegate {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -58,13 +58,22 @@ class TableViewController: UITableViewController, ViewControllerDelegate {
             cell.textLabel!.text = name
         }
         return cell
-        }else{
+        }else if(indexPath.section == 1 )
+        {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CollectiveCell", for: indexPath)
 
             // Configure the cell...
             cell.textLabel?.text = "All Food Images"
-            cell.detailTextLabel?.text = "summary"
+            cell.detailTextLabel?.text = "Detail"
             
+            return cell
+        }
+        else{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CaloriesCell", for: indexPath)
+
+            // Configure the cell...
+            cell.textLabel?.text = "CaloriesMap"
+            cell.detailTextLabel?.text = "Detail"
             return cell
         }
     }
@@ -124,6 +133,10 @@ class TableViewController: UITableViewController, ViewControllerDelegate {
                 vc.Result = cart
                 vc.finalTime = totaltime
                 cart = []
+            }
+            else if let vc = segue.destination as? MapViewController {
+                vc.names = self.foodModel.foodNames as NSArray
+                vc.calories = self.foodModel.foodCal as NSArray
             }
         }
     

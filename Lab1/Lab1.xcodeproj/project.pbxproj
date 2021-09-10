@@ -23,6 +23,7 @@
 		CC7FBD9226EA046C004A6A50 /* FoodName.csv in Resources */ = {isa = PBXBuildFile; fileRef = CC7FBD9126EA046C004A6A50 /* FoodName.csv */; };
 		CCABC44D26E85E6D00C209B8 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCABC44C26E85E6D00C209B8 /* TableViewController.swift */; };
 		CCABC45126E85FC100C209B8 /* FoodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CCABC45026E85FC100C209B8 /* FoodModel.m */; };
+		CCDCB36126EAE817008CDD97 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDCB36026EAE817008CDD97 /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		CCABC44E26E85FC000C209B8 /* Lab1-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lab1-Bridging-Header.h"; sourceTree = "<group>"; };
 		CCABC44F26E85FC100C209B8 /* FoodModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FoodModel.h; sourceTree = "<group>"; };
 		CCABC45026E85FC100C209B8 /* FoodModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FoodModel.m; sourceTree = "<group>"; };
+		CCDCB36026EAE817008CDD97 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				C2B701A526E98ED8007E4B31 /* ImageViewController.swift */,
 				CC7FBD9126EA046C004A6A50 /* FoodName.csv */,
 				C217766726E70309004AD3C8 /* Main.storyboard */,
+				CCDCB36026EAE817008CDD97 /* MapViewController.swift */,
 				A3851DF926EABE9700FFEA4A /* CollectionViewCell.swift */,
 				A3851DF726EABD0B00FFEA4A /* CollectionViewController.swift */,
 				CC7FBD8F26E9DE95004A6A50 /* CheckoutViewController.swift */,
@@ -292,6 +295,7 @@
 				C217766626E70309004AD3C8 /* ViewController.swift in Sources */,
 				C217766226E70309004AD3C8 /* AppDelegate.swift in Sources */,
 				A3851DFA26EABE9700FFEA4A /* CollectionViewCell.swift in Sources */,
+				CCDCB36126EAE817008CDD97 /* MapViewController.swift in Sources */,
 				C217766426E70309004AD3C8 /* SceneDelegate.swift in Sources */,
 				CCABC44D26E85E6D00C209B8 /* TableViewController.swift in Sources */,
 				A3851DF826EABD0B00FFEA4A /* CollectionViewController.swift in Sources */,

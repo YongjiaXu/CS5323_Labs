@@ -83,11 +83,7 @@
     }
     
     _foodCal = [[NSArray alloc] init];
-    _foodCal = [strFile componentsSeparatedByString:@"\r"];
-    
-    for(NSString *mulName in _foodCal){
-        printf("%s", mulName);
-    }
+    _foodCal = [strFile componentsSeparatedByString:@"\r\n"];
     
     return _foodCal;
 }

@@ -12,6 +12,20 @@ protocol ViewControllerDelegate : NSObjectProtocol {
 }
 
 
+extension UIImage{
+    func reSizeImage(reSize: CGSize)-> UIImage {
+        UIGraphicsBeginImageContextWithOptions(reSize, false, UIScreen.main.scale);
+        self .draw( in: CGRect (x:0, y:0, width: reSize.width, height: reSize.height));
+        let reSizeImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!;
+        UIGraphicsEndPDFContext();
+        return reSizeImage;
+    }
+    
+    func scaleImage(scaleSize: CGFloat)-> UIImage {
+        let reSize = CGSize(width: self.size.width*scaleSize, height: self.size.height*scaleSize)
+        return reSizeImage(reSize: reSize)
+    }
+}
 
 
 class ViewController: UIViewController  {
@@ -21,7 +35,6 @@ class ViewController: UIViewController  {
     
     
     var timer = Timer()
-    var isTimerRunning = false
     var timeinsec = 0;
     
     
@@ -40,6 +53,7 @@ class ViewController: UIViewController  {
     @IBOutlet weak var imageView: UIImageView!
     
     
+    @IBOutlet weak var timerLabel: UILabel!
     
     @IBOutlet weak var slider: UISlider!
     
@@ -54,6 +68,8 @@ class ViewController: UIViewController  {
     
     @objc func updateTimer() {
         timeinsec = timeinsec + 1
+        timerLabel.text = "You're wasting " + timeinsec.description + "sec on ordering food!"
+        
     }
     
     
@@ -62,14 +78,15 @@ class ViewController: UIViewController  {
         self.imageView?.image = self.foodModel.getImageWithName(displayFoodName)
         self.label.text = displayFoodName
         
-        self.slider.minimumValueImage = UIImage.init(named: "mild")
-        self.slider.maximumValueImage = UIImage.init(named: "hot")
+        self.slider.minimumValueImage = UIImage.init(named: "mild")?.scaleImage(scaleSize: 0.75)
+        self.slider.maximumValueImage = UIImage.init(named: "hot")?.scaleImage(scaleSize: 0.75)
         self.slider.maximumValue = 3
         self.slider.minimumValue = 0
         
         self.stepper.wraps = true;
         self.stepper.autorepeat = true;
         self.stepper.maximumValue = 100;
+        self.stepper.transform = CGAffineTransform(scaleX: 1.25, y: 1.25)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped(gesture:)))
         imageView.addGestureRecognizer(tapGesture)
