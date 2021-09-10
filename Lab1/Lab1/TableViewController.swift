@@ -72,7 +72,7 @@ class TableViewController: UITableViewController, ViewControllerDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CaloriesCell", for: indexPath)
 
             // Configure the cell...
-            cell.textLabel?.text = "CaloriesMap"
+            cell.textLabel?.text = "Calorie Map"
             cell.detailTextLabel?.text = "Detail"
             return cell
         }

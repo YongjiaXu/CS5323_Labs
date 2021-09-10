@@ -12,23 +12,24 @@ class CheckoutViewController: UIViewController {
     var Result:Array<Array<String>> = []
     var finalTime:Int = 0
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet var picker: UIPickerView!
     let sauces = ["None", "Sweet and sour", "Alfredo", "Soy sauce", "Chili Garlic", "Teriyaki"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        scrollView.contentLayoutGuide.bottomAnchor.constraint(equalTo: resultTable.bottomAnchor).isActive = true
         picker.dataSource = self
         picker.delegate = self
-        var total = "Item   Spicy   Amount\n"
+        var total = ""
         for dish in Result{
-            for item in dish{
-                total = total + item + ",   "
-            }
-            total = total + "\n"
+            total = total + "- "+dish[0]+", Spicy Level: " + dish[1] + ", Amout Ordered: " + dish[2]+"\n"
             
         }
-        
+        print(total)
         self.resultTable.text = total
+        self.resultTable.lineBreakMode = .byWordWrapping;
+        self.resultTable.numberOfLines = 0;
         self.switchOutlet.transform = CGAffineTransform(scaleX: 1.25, y: 1.25)
         let timelabel = "The time you spent on ordering food is " + finalTime.description  + "sec.\nYou must be a food lover!"
         self.LabelOutlet.text = timelabel
