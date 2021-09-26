@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A3DF0DC5270100DE002F2E5E /* ToneAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DF0DC4270100DE002F2E5E /* ToneAnalysis.swift */; };
 		B65B5A5A24F4409F00E74E73 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65B5A5924F4409F00E74E73 /* AppDelegate.swift */; };
 		B65B5A5C24F4409F00E74E73 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65B5A5B24F4409F00E74E73 /* SceneDelegate.swift */; };
 		B65B5A5E24F4409F00E74E73 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65B5A5D24F4409F00E74E73 /* ViewController.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A3DF0DC4270100DE002F2E5E /* ToneAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToneAnalysis.swift; sourceTree = "<group>"; };
 		B65B5A5624F4409F00E74E73 /* AudioLabSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioLabSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B65B5A5924F4409F00E74E73 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B65B5A5B24F4409F00E74E73 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				B65B5A6724F440A100E74E73 /* Info.plist */,
 				B65B5A6D24F440D500E74E73 /* AudioLabSwift-Bridging-Header.h */,
 				B65B5A7424F4440300E74E73 /* satisfaction.mp3 */,
+				A3DF0DC4270100DE002F2E5E /* ToneAnalysis.swift */,
 			);
 			path = AudioLabSwift;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 				B65B5A7024F440D600E74E73 /* Novocaine.m in Sources */,
 				B65B5A8124F4AAB800E74E73 /* MetalGraph.swift in Sources */,
 				B65B5A5E24F4409F00E74E73 /* ViewController.swift in Sources */,
+				A3DF0DC5270100DE002F2E5E /* ToneAnalysis.swift in Sources */,
 				CCE538F826F3F070006F874F /* TableViewController.swift in Sources */,
 				B65B5A5A24F4409F00E74E73 /* AppDelegate.swift in Sources */,
 				B65B5A7F24F4798B00E74E73 /* Shaders.metal in Sources */,
