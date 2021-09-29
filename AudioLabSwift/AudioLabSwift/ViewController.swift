@@ -10,7 +10,7 @@ import UIKit
 import Metal
 
 
-let AUDIO_BUFFER_SIZE = 1024*4
+let AUDIO_BUFFER_SIZE = 1024*4*4
 
 
 class ViewController: UIViewController {
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
             numPointsInGraph: AUDIO_BUFFER_SIZE)
 
         
-        audio.startMicrophoneProcessing(withFps: 10)
+        audio.startMicrophoneProcessing(withFps: 60.0)
         audio.play()
         
         // run the loop for updating the graph peridocially
@@ -64,8 +64,8 @@ class ViewController: UIViewController {
     @objc
     func updateGraph(){
         
-        self.loudestLabel.text = "Loudest: test Hz"
-        self.secondLoudestLabel.text = "Second Loudest: 0 Hz"
+        self.loudestLabel.text = "Loudest: \(self.audio.loudestTone) Hz"
+        self.secondLoudestLabel.text = "Second Loudest: \(self.audio.secondLoudestTone) Hz"
         
         self.graph?.updateGraph(
             data: self.audio.fftData,

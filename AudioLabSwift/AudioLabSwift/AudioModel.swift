@@ -16,6 +16,9 @@ class AudioModel {
     var timeData:[Float]
     var fftData:[Float]
     var fftData_zoomed:[Float]
+    var loudestTone:Float
+    var secondLoudestTone:Float
+    private var toneAnalysis:ToneAnalysis
     
     // MARK: Public Methods
     init(buffer_size:Int) {
@@ -24,6 +27,9 @@ class AudioModel {
         timeData = Array.init(repeating: 0.0, count: BUFFER_SIZE)
         fftData = Array.init(repeating: 0.0, count: BUFFER_SIZE/2)
         fftData_zoomed = Array.init(repeating: 0.0, count: 20)
+        loudestTone = 0.0
+        secondLoudestTone = 0.0
+        toneAnalysis = ToneAnalysis(audioFftData: fftData)
     }
     
     // public function for starting processing of microphone data
@@ -35,6 +41,7 @@ class AudioModel {
                             selector: #selector(self.runEveryInterval),
                             userInfo: nil,
                             repeats: true)
+        
     }
     
     
@@ -142,12 +149,19 @@ class AudioModel {
             // now take FFT and display it
             fftHelper!.performForwardFFT(withData: &timeData,
                                          andCopydBMagnitudeToBuffer: &fftData)
-            
-            findMax20()
+            toneAnalysis.setFFTData(audioFftData: fftData)
+            let loudestTones = toneAnalysis.getTwoLoudestTones()
+            if (loudestTones.count > 1) {
+                self.loudestTone = loudestTones[0]
+                self.secondLoudestTone = loudestTones[1]
+            }
+
         }
     }
     
     @objc
+    
+    // used in flipped module
     private func findMax20(){
         let pointPerInterval:Int = BUFFER_SIZE / 40;
         var counter = 0;
@@ -155,6 +169,7 @@ class AudioModel {
         var index = 0
         
         for i in 0..<Int(fftData.count) {
+            print(fftData[i])
             if fftData[i] > max {
                 max = fftData[i]
             }
