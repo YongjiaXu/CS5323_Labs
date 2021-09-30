@@ -18,6 +18,7 @@ class AudioModel {
     var fftData_zoomed:[Float]
     var loudestTone:Float
     var secondLoudestTone:Float
+    var gesturingstatus:String
     private var toneAnalysis:ToneAnalysis
     
     // MARK: Public Methods
@@ -30,6 +31,7 @@ class AudioModel {
         loudestTone = 0.0
         secondLoudestTone = 0.0
         toneAnalysis = ToneAnalysis(audioFftData: fftData)
+        gesturingstatus = "not gesturing"
     }
     
     // public function for starting processing of microphone data
@@ -57,13 +59,17 @@ class AudioModel {
     }
     
     
-    func startProcessingSinewaveForPlayback(withFreq:Float=330.0){
+    func startProcessingSinewaveForPlayback(withFreq:Float,withFps:Double){
         sineFrequency = withFreq
         // Two examples are given that use either objective c or that use swift
         //   the swift code for loop is slightly slower thatn doing this in c,
         //   but the implementations are very similar
         //self.audioManager?.outputBlock = self.handleSpeakerQueryWithSinusoid // swift for loop
         self.audioManager?.setOutputBlockToPlaySineWave(sineFrequency) // c for loop
+        Timer.scheduledTimer(timeInterval: 1.0/withFps, target: self,
+                             selector: #selector(self.runEveryIntervalB),
+                            userInfo: nil,
+                            repeats: true)
     }
     
     // You must call this when you want the audio to start being handled by our model
@@ -160,6 +166,19 @@ class AudioModel {
     }
     
     @objc
+    private func runEveryIntervalB(){
+        if inputBuffer != nil{
+            // copy data to swift array
+            self.inputBuffer!.fetchFreshData(&timeData, withNumSamples: Int64(BUFFER_SIZE))
+            
+            // now take FFT and display it
+            fftHelper!.performForwardFFT(withData: &timeData,
+                                         andCopydBMagnitudeToBuffer: &fftData)
+            toneAnalysis.defreq = sineFrequency
+            toneAnalysis.setFFTData(audioFftData: fftData)
+            self.gesturingstatus = toneAnalysis.getDopplerShift()
+        }
+    }
     
     // used in flipped module
     private func findMax20(){
