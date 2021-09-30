@@ -22,7 +22,7 @@ class ToneAnalysis {
     var df:Float
     init (audioFftData: Array<Float>){
         fftData = audioFftData
-        samplingFreq = 44100.0
+        samplingFreq = 48000
         N = 0
         df = 0.0
         currstatus = "Initializing Doppler shifts"
@@ -235,28 +235,23 @@ class ToneAnalysis {
                               index: index))
         }
         let sortedPeaks = peaks.sorted {(l, r) in return l.m2 > r.m2 }
-        //if (sortedPeaks.count > 1 ){
-        //    print(sortedPeaks[0].index, sortedPeaks[0].f2)
-        //}
         return sortedPeaks
     }
     
     private func getFrequencyByIndex(index: Int) -> Float {
-        return Float(index)*self.df
+        return Float(index)*self.samplingFreq/Float(self.fftData.count*2)
     }
     
     
     private func getIndexByFrequency(wfreq:Float) -> Int{
         let floatIndex = wfreq/self.df
         
-        // If the frequency is smaller than the hertzBetweenSamples
         if floatIndex < 0 {
             return 0
         }
         
         // If the index is out of bounds of the number of fft frames, return max frequency
         if floatIndex > Float(fftData.count*2) {
-            // should we make this raise an error?
             return fftData.count*2 - 1
         }
         
