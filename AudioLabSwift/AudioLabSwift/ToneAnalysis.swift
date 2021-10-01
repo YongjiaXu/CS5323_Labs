@@ -158,17 +158,17 @@ class ToneAnalysis {
             let leftcheck = leftperc-baselines[0]
             let rightcheck = rightperc-baselines[1]
             
-            
-            if(rightcheck>10.3){
+            if(abs(rightcheck) > 20 && rightcheck > leftcheck){
                 self.currstatus = "Gesturing toward"
                 print("==========Toward")
             }
-            else if(leftcheck > 11.2){
+            else if(abs(rightcheck) > 20 && rightcheck < leftcheck){
                 self.currstatus = "Gesturing Away"
                 print("==========Away")
             }
-            else if(rightcheck<4 && leftcheck<4){
-                self.currstatus = "Hold"
+            else{
+                self.currstatus = "Not gesturing"
+                print("==========Not gesturing")
             }
             
         }

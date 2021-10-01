@@ -27,7 +27,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        loudestLabel.layer.masksToBounds = true
+        loudestLabel.layer.cornerRadius = 7
+        secondLoudestLabel.layer.masksToBounds = true
+        secondLoudestLabel.layer.cornerRadius = 7
         // add in graphs for display
         graph?.addGraph(withName: "space",
                         shouldNormalize: false,
@@ -64,8 +67,8 @@ class ViewController: UIViewController {
     @objc
     func updateGraph(){
         
-        self.loudestLabel.text = "Loudest: \(self.audio.loudestTone) Hz"
-        self.secondLoudestLabel.text = "Second Loudest: \(self.audio.secondLoudestTone) Hz"
+        self.loudestLabel.text = "  Loudest: \(self.audio.loudestTone) Hz"
+        self.secondLoudestLabel.text = "  Second Loudest: \(self.audio.secondLoudestTone) Hz"
         
         self.graph?.updateGraph(
             data: self.audio.fftData,

@@ -31,11 +31,14 @@ class MBViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        Frequencytext.layer.masksToBounds = true
+        Frequencytext.layer.cornerRadius = 7
+        gesteringtext.layer.masksToBounds = true
+        gesteringtext.layer.cornerRadius = 7
+        
         graph?.addGraph(withName: "fft",
                         shouldNormalize: true,
                         numPointsInGraph: AUDIO_BUFFER_SIZE/2)
-        
         
         slider.minimumValue = 15000         // Min inaudible tone for slider is 15k
         slider.maximumValue = 20000         // Max inaudible tone for slider is 20k
