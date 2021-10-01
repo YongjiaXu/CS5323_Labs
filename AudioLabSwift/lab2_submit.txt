@@ -1,0 +1,4 @@
+Github Link: https://github.com/YongjiaXu/CS5323_Labs/tree/master/AudioLabSwift
+Team members: Yongjia Xu, James Zhai, John Zhang
+Team name: mac's place 
+Video link: https://www.dropbox.com/sh/mtmsi6s7nom9pfo/AADwjhvhV0ggUb15sW62mfPna?dl=0
