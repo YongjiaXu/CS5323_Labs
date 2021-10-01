@@ -9,26 +9,32 @@
 import Foundation
 import Accelerate
 
+
+
 class ToneAnalysis {
     
-    var defreq:Float
-    var counter:Int
-    var difference:[Float]
+    var defreq:Float        // Frequency from slider
+    var counter:Int         // Counter for configuring the base lines
+    var baselines:[Float]
     var fftData:[Float]
     var samplingFreq:Float
-    var currstatus:String
-    var setup:Bool
+    var currstatus:String   // Current output about gesturing
+    var lastFreq:Float      // Last frequency before changed from the slider
+    var needChange:Bool     // Whether we need to configure the baselines
     var N:Int
     var df:Float
+    
+    
     init (audioFftData: Array<Float>){
         fftData = audioFftData
         samplingFreq = 48000
         N = 0
         df = 0.0
         currstatus = "Initializing Doppler shifts"
-        difference = [Float(1),Float(1)]
-        setup = false
+        baselines = [Float(1),Float(1)]
         defreq = Float(5000)
+        lastFreq = Float(0)
+        needChange = false
         counter = 0
     }
     
@@ -52,19 +58,17 @@ class ToneAnalysis {
     func getDopplerShift() -> String {
 
         
-        var windowSize = 15/(Int(self.df))*2-1
+        var windowSize = 15/(Int(self.df))*2-1      // Set the window size
         
         if (windowSize % 2 == 0) {
-            // maximum needs to be right in the middle of the window
-            // window size needs to be odd
             windowSize = windowSize - 1
         }
         
         
         
-        let highindex = getIndexByFrequency(wfreq: (defreq+200))
-        let lowindex = getIndexByFrequency(wfreq: (defreq-200))
-        let newfftdata = self.fftData[lowindex...highindex]
+        let highindex = getIndexByFrequency(wfreq: (defreq+200))    // Upper bound for selected frequency
+        let lowindex = getIndexByFrequency(wfreq: (defreq-200))     // Lower bound for selected frequency
+        let newfftdata = self.fftData[lowindex...highindex] // Get fft data between the bounds
         
         
         // perfrom sliding window to find two peak
@@ -79,103 +83,95 @@ class ToneAnalysis {
             let window = fullData2[i...i+windowSize-1]
             var max:Float = 0.0
             var index:UInt = 0
-            // this helps improve the performance
             vDSP_maxvi(Array(window), vDSP_Stride(1), &max, &index, vDSP_Length(windowSize))
             if (index == windowSize/2) {
-                // since we added the padding, the index of subarray is parallel with the original fftData
-                peakIndexes.append(i+lowindex)
+                peakIndexes.append(i+lowindex)      // Need +lowindex to get the index in fftdata
             }
         }
 
-        let sortedPeaks = sortHelper(peakIndexes: peakIndexes)
+        let sortedPeaks = sortHelper(peakIndexes: peakIndexes)  // Get peeks
+        let thepeak = sortedPeaks[1].m2         // Get the peak magnitude
+        let peakindex = sortedPeaks[1].index    // Get the index of the peak
         
         
-        
+        var leftdif = Float(0)
+        var rightdif = Float(0)
+        var curi = 0;
     
-         //print("Loudest Freq: \(loudestFreq[0]), Second Loudest Freq: \(loudestFreq[1])")
-         
-         // Determine motion of hand based on magnitude and frequency
-        if(sortedPeaks[1].m2 > Float(-64)){
-            print(sortedPeaks[1].f2)
-            if(sortedPeaks[1].f2 > self.defreq+40){
-                print("========= moving toward")
-                self.currstatus = "Moving Toward"
-             }
-            else if(sortedPeaks[1].f2 < self.defreq-40){
-                print("========= moving away")
-                self.currstatus = "Moving Away"
+        // Find the average magnitude at the left and right of the peak
+        if(peakindex < 50){
+            for i in 1...(peakindex - 1){
+                leftdif = leftdif + self.fftData[peakindex-i]
+                rightdif = rightdif + self.fftData[peakindex+i]
+                curi = curi + 1
+            }
+        }
+        else{
+            for i in 1...50 {
+                leftdif = leftdif + self.fftData[peakindex-i]
+                rightdif = rightdif + self.fftData[peakindex+i]
+                curi = curi + 1
+            }
+        }
+
+        
+        leftdif = leftdif/Float(curi)
+        rightdif = rightdif/Float(curi)
+        
+        
+        // Need +100 to make sure both dif and peak are positive, and get the percentage of the left average and right average to the peak.
+        let leftperc = (leftdif + 100)/(thepeak + 100) * 100
+        let rightperc = (rightdif + 100)/(thepeak + 100) * 100
+        
+        
+        
+        if(defreq != lastFreq && needChange == false){
+            needChange = true           // Need to reset the baselines
+            counter = 0             // Reset the counter
+            self.currstatus = "Initializing Doppler shifts"
+        }
+        else if (needChange == true){   // If it is changeing
+            if(counter < 500){          // Loop 500 times
+                if(baselines[0] == 0){
+                    baselines[0] = leftperc
+                }
+                else{
+                    baselines[0] = (leftperc + baselines[0]) / 2 // Take the average
+                }
+                if(baselines[1] == 0){
+                    baselines[1] = rightperc
+                }
+                else{
+                    baselines[1] = (rightperc + baselines[1]) / 2 // Take the average
+                }
+                counter = counter + 1
             }
             else{
-                self.currstatus = "No Motion"
+                lastFreq = defreq;
+                needChange = false      // Change finished
+                self.currstatus = "Not gesturing"
             }
-         }
-         else{
-            self.currstatus = "No Motion"
-         }
-        
-//
-//        var leftdif = Float(0)
-//        var rightdif = Float(0)
-//
-//
-//        if(sortedPeaks[0].index < 20){
-//            for i in 1...(sortedPeaks[0].index - 1){
-//                leftdif = leftdif + self.fftData[sortedPeaks[0].index-i]
-//                rightdif = rightdif + self.fftData[sortedPeaks[0].index+i]
-//            }
-//        }
-//        else{
-//            for i in 1...20 {
-//                leftdif = leftdif + self.fftData[sortedPeaks[0].index-i]
-//                rightdif = rightdif + self.fftData[sortedPeaks[0].index+i]
-//            }
-//        }
-//        leftdif = leftdif/20
-//        rightdif = rightdif/20
-//
-//        let leftperc = (leftdif + 100)/(thepeak + 100) * 100
-//        let rightperc = (rightdif + 100)/(thepeak + 100) * 100
-//
-//
-//        if(counter<200){
-//            if(difference[0] == 0){
-//                difference[0] = leftperc
-//            }
-//            else{
-//                difference[0] = (leftperc + difference[0]) / 2
-//            }
-//            if(difference[1] == 0){
-//                difference[1] = rightperc
-//            }
-//            else{
-//                difference[1] = (rightperc + difference[1]) / 2
-//            }
-//            counter = counter + 1;
-//        }
-//        else{
-//
-//            currstatus = "Hold"
-//            print(sortedPeaks[0].index)
-//            print("++++++++++  \(difference[0])")
-//            print("----------- \(difference[1])")
-//            print("!!!!!!!!!!!!  \(leftperc)")
-//            print("!!!!!!!!!!!! \(rightperc)")
-//            print("@@@@@@@@@@@ \((leftperc-difference[0])/difference[0]*100) ")
-//            print("@@@@@@@@@@@ \((rightperc-difference[1])/difference[1]*100 )")
-//
-//            if((leftperc-difference[0])/difference[0]*100 > 10
-//                || (rightperc-difference[1])/difference[1]*100 < -10)
-//            {
-//                currstatus = "Out"
-//            }
-//            else if((rightperc-difference[1])/difference[1]*100 > 10
-//                    || (leftperc-difference[0])/difference[0]*100 < -10)
-//                    {
-//                currstatus = "In"
-//            }
-//
-//        }
-        
+        }
+        else{
+            
+            // The difference between baselines and current magnitudes
+            let leftcheck = leftperc-baselines[0]
+            let rightcheck = rightperc-baselines[1]
+            
+            
+            if(rightcheck>10.3){
+                self.currstatus = "Gesturing toward"
+                print("==========Toward")
+            }
+            else if(leftcheck > 11.2){
+                self.currstatus = "Gesturing Away"
+                print("==========Away")
+            }
+            else if(rightcheck<4 && leftcheck<4){
+                self.currstatus = "Hold"
+            }
+            
+        }
     
         return currstatus
     }
@@ -244,19 +240,14 @@ class ToneAnalysis {
     
     
     private func getIndexByFrequency(wfreq:Float) -> Int{
-        let floatIndex = wfreq/self.df
+        let floatIndex = wfreq/self.df          // Capture the index
         
         if floatIndex < 0 {
             return 0
         }
-        
-        // If the index is out of bounds of the number of fft frames, return max frequency
         if floatIndex > Float(fftData.count*2) {
             return fftData.count*2 - 1
         }
-        
-        // Round up for high frequency, down for low frequency (to include both)
-    
         return Int(floatIndex.rounded(.down))
     }
     

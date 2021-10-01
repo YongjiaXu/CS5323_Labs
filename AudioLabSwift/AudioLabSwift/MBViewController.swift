@@ -18,13 +18,14 @@ class MBViewController: UIViewController {
     
     let audioI = AudioModel(buffer_size: AUDIO_BUFFER_SIZE)
     lazy var graph:MetalGraph? = {
-        return MetalGraph(mainView: self.view)
+        return MetalGraph(mainView: self.view)          // Create the FFT graph
    }()
     
     
+    // Update the frequency to the label
     @IBAction func changeFrequency(_ sender: UISlider) {
         self.audioI.sineFrequency = sender.value
-        Frequencytext.text = "Frequency: \(sender.value)"
+        Frequencytext.text = "Frequency: \(sender.value)HZ"
     }
     
     
@@ -65,9 +66,7 @@ class MBViewController: UIViewController {
     @objc
     func updateGraph(){
         
-        //self.loudestLabel.text = "Loudest: \(self.audio.loudestTone) Hz"
-        //self.secondLoudestLabel.text = "Second Loudest: \(self.audio.secondLoudestTone) Hz"
-        self.gesteringtext.text = self.audioI.gesturingstatus
+        self.gesteringtext.text = self.audioI.gesturingstatus   // Update gesturing info
         self.graph?.updateGraph(
             data: self.audioI.fftData,
             forKey: "fft"

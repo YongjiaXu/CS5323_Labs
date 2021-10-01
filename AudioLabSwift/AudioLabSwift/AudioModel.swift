@@ -52,7 +52,7 @@ class AudioModel {
         self.audioManager?.outputBlock = self.handleSpeakerQueryWithAudioFile
         self.fileReader?.play()
         Timer.scheduledTimer(timeInterval: 1.0/withFps, target: self,
-                            selector: #selector(self.runEveryInterval2),
+                            selector: #selector(self.runEveryInterval),
                             userInfo: nil,
                             repeats: true)
         
@@ -205,21 +205,6 @@ class AudioModel {
         }
     }
     
-   
-    @objc
-    private func runEveryInterval2(){
-        if outputBuffer != nil {
-            // copy data to swift array
-            //self.inputBuffer!.fetchFreshData(&timeData, withNumSamples: Int64(BUFFER_SIZE))
-            self.outputBuffer!.fetchFreshData(&timeData, withNumSamples: Int64(BUFFER_SIZE))
-            
-            // now take FFT and display it
-            fftHelper!.performForwardFFT(withData: &timeData,
-                                         andCopydBMagnitudeToBuffer: &fftData)
-            
-            findMax20()
-        }
-    }
     
     //==========================================
     // MARK: Audiocard Callbacks
