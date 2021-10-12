@@ -27,14 +27,24 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-        
         startActivityMonitoring()
         startPedometerMonitoring()
     }
 
-
+    func setGoal(){
+        
+    }
+    
+    func gameOrNot(){
+        
+    }
+    
+    func loadGoal(){
+        
+    }
+    
+    
+    
     func startActivityMonitoring(){
             if CMMotionActivityManager.isActivityAvailable(){
                 self.activityManager.startActivityUpdates(to: OperationQueue.main)
