@@ -13,10 +13,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var currentStepLabel: UILabel!
     @IBOutlet weak var yesterdayStepLabel: UILabel!
+    @IBOutlet weak var updatingLabel: UILabel!
     
     let activityManager = CMMotionActivityManager()
     let pedometer = CMPedometer()
     
+    var soFarSteps = 0
+    var goalSteps = 0
+    var updatingSteps = 0
     
     
 
@@ -67,27 +71,40 @@ class ViewController: UIViewController {
             if CMPedometer.isStepCountingAvailable(){
                 let startToday = Calendar.current.startOfDay(for: Date())
                 let startYesterday = startToday.addingTimeInterval(-60*60*24)
+                //var todaySteps = 0
                                                       
                 pedometer.queryPedometerData(from: startYesterday, to:startToday)
                 {(pedData:CMPedometerData?, error:Error?)->Void in
                     if let data = pedData {
-                        
-                        // display the output directly on the phone
+                         //display the output directly on the phone
                           DispatchQueue.main.async {
                             self.yesterdayStepLabel.text = "\(data.numberOfSteps.intValue)"
                         }
                     }
                 }
+                
+                
                 pedometer.queryPedometerData(from: startToday, to: Date())
                 {(pedData:CMPedometerData?, error:Error?)->Void in
                     if let data = pedData {
+                        self.soFarSteps = data.numberOfSteps.intValue
                         
-                        // display the output directly on the phone
-                          DispatchQueue.main.async {
-                            self.currentStepLabel.text = "\(data.numberOfSteps.intValue)"
+                        DispatchQueue.main.async {
+                            self.currentStepLabel.text = "\(self.soFarSteps)"
                         }
+                       
                     }
                 }
+                
+                pedometer.startUpdates(from: Date())
+                            {(pedData:CMPedometerData?, error:Error?)->Void in
+                                if let data = pedData {
+                                    self.updatingSteps = data.numberOfSteps.intValue + self.soFarSteps
+                                    DispatchQueue.main.async {
+                                        self.updatingLabel.text = "\(self.updatingSteps)"
+                                    }
+                                }
+                            }
                 
             }
         }
