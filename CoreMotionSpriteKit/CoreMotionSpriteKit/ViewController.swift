@@ -16,10 +16,15 @@ class ViewController: UIViewController {
     
     let activityManager = CMMotionActivityManager()
     let pedometer = CMPedometer()
-
+    
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         
         startActivityMonitoring()
         startPedometerMonitoring()
@@ -60,11 +65,10 @@ class ViewController: UIViewController {
     func startPedometerMonitoring(){
             // check if pedometer is okay to use
             if CMPedometer.isStepCountingAvailable(){
-                guard let pastDate = Calendar.current.date(byAdding: .day, value: -1, to: Date()) else{
-                    return
-                }
+                let startToday = Calendar.current.startOfDay(for: Date())
+                let startYesterday = startToday.addingTimeInterval(-60*60*24)
                                                       
-                pedometer.queryPedometerData(from: Calendar.current.startOfDay(for: pastDate), to: pastDate)
+                pedometer.queryPedometerData(from: startYesterday, to:startToday)
                 {(pedData:CMPedometerData?, error:Error?)->Void in
                     if let data = pedData {
                         
@@ -74,7 +78,7 @@ class ViewController: UIViewController {
                         }
                     }
                 }
-                pedometer.queryPedometerData(from: Calendar.current.startOfDay(for: Date()), to: Date())
+                pedometer.queryPedometerData(from: startToday, to: Date())
                 {(pedData:CMPedometerData?, error:Error?)->Void in
                     if let data = pedData {
                         
@@ -88,6 +92,8 @@ class ViewController: UIViewController {
             }
         }
 
+    
+    
     
     
 }
