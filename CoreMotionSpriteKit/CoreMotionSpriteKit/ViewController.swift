@@ -8,7 +8,8 @@
 import UIKit
 import CoreMotion
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, GameViewControllerDelegate{
+    
 
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var currentStepLabel: UILabel!
@@ -21,6 +22,7 @@ class ViewController: UIViewController {
     var soFarSteps = 0
     var goalSteps = 0
     var updatingSteps = 0
+    var GameResult = 0
     
     
 
@@ -118,7 +120,25 @@ class ViewController: UIViewController {
                 
             }
         }
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? GameViewController{
+            vc.delegate = self
+        }
+           
+    }
+    
+    
+    
 
+    func CatchResult(controller:GameViewController, data:Int){
+        GameResult = data                    // Got the game result
+        print("I got ", GameResult)  // 0 means has not play the game
+                                    // 1 means has played but failed
+                                    // 2 means has played and won
+    }
     
     
     
