@@ -57,6 +57,17 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
         }else{
             userFeedBack.text = "Pleas enter numbers only"
         }
+        
+        if Int(self.goalSteps - self.soFarSteps) > 0{
+            DispatchQueue.main.async {
+                self.leftStepLabel.text = "\(self.goalSteps - self.soFarSteps)"
+            }
+        }else{
+            DispatchQueue.main.async {
+                self.leftStepLabel.text = "Goal achieved!"
+            }
+        }
+        
         textField.resignFirstResponder()
         return true
     }
@@ -65,11 +76,6 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
         
     }
     
-    
-    
-    func gameOrNot(){
-        
-    }
     
     func loadGoal(){
         if UserDefaults.standard.object(forKey: "GoalStep") == nil {
