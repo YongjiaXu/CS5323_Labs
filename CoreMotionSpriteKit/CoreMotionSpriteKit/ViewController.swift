@@ -23,7 +23,7 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
     
     
     var soFarSteps:Int = 0
-    var goalSteps:Int = 100{
+    var goalSteps:Int = 1000{
         didSet{
             
             userFeedBack.text = "\(goalSteps)"
@@ -67,7 +67,7 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
     
     
     
-    func goalAchieved(){
+    func gameOrNot(){
         
     }
     
@@ -77,15 +77,7 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
         }
         self.goalSteps = UserDefaults.standard.object(forKey: "GoalStep") as! Int
         
-        if Int(self.goalSteps - self.soFarSteps) > 0{
-            DispatchQueue.main.async {
-                self.leftStepLabel.text = "\(self.goalSteps - self.soFarSteps)"
-            }
-        }else{
-            DispatchQueue.main.async {
-                self.leftStepLabel.text = "Goal achieved!"
-            }
-        }
+        
         
     }
     
