@@ -24,6 +24,8 @@
 	<true/>
 	<key>NSMotionUsageDescription</key>
 	<string>This app uses motion for activity recognition. </string>
+	<key>GoalStep</key>
+	<integer>0</integer>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

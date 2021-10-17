@@ -8,40 +8,84 @@
 import UIKit
 import CoreMotion
 
-class ViewController: UIViewController, GameViewControllerDelegate{
+class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDelegate{
     
 
     @IBOutlet weak var statusLabel: UILabel!
-    @IBOutlet weak var currentStepLabel: UILabel!
     @IBOutlet weak var yesterdayStepLabel: UILabel!
     @IBOutlet weak var updatingLabel: UILabel!
+    @IBOutlet weak var goalField: UITextField!
+    @IBOutlet weak var userFeedBack: UILabel!
+    @IBOutlet weak var leftStepLabel: UILabel!
     
     let activityManager = CMMotionActivityManager()
     let pedometer = CMPedometer()
     
-    var soFarSteps = 0
-    var goalSteps = 0
-    var updatingSteps = 0
+    
+    var soFarSteps:Int = 0
+    var goalSteps:Int = 100{
+        didSet{
+            
+            userFeedBack.text = "\(goalSteps)"
+            }
+        }
+    
+    
+    var updatingSteps:Int = 0
     var GameResult = 0
+    var testSteps:Int = 100
     
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadGoal()
+        
         startActivityMonitoring()
         startPedometerMonitoring()
+        
+        goalField.delegate = self
     }
 
-    func setGoal(){
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if let num = Int(textField.text!){
+            self.goalSteps = num
+            UserDefaults.standard.set(self.goalSteps, forKey: "GoalStep")
+
+        }else{
+            userFeedBack.text = "Pleas enter numbers only"
+        }
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    @IBAction func setGoal(_ sender: Any) {
         
     }
     
-    func gameOrNot(){
+    
+    
+    func goalAchieved(){
         
     }
     
     func loadGoal(){
+        if UserDefaults.standard.object(forKey: "GoalStep") == nil {
+            UserDefaults.standard.set(self.goalSteps, forKey: "GoalStep")
+        }
+        self.goalSteps = UserDefaults.standard.object(forKey: "GoalStep") as! Int
+        
+        if Int(self.goalSteps - self.soFarSteps) > 0{
+            DispatchQueue.main.async {
+                self.leftStepLabel.text = "\(self.goalSteps - self.soFarSteps)"
+            }
+        }else{
+            DispatchQueue.main.async {
+                self.leftStepLabel.text = "Goal achieved!"
+            }
+        }
         
     }
     
@@ -101,11 +145,23 @@ class ViewController: UIViewController, GameViewControllerDelegate{
                     if let data = pedData {
                         self.soFarSteps = data.numberOfSteps.intValue
                         
-                        DispatchQueue.main.async {
-                            self.currentStepLabel.text = "\(self.soFarSteps)"
+                        
+                    DispatchQueue.main.async {
+                        self.updatingLabel.text = "\(self.soFarSteps)"
+                    }
+                        
+                        if Int(self.goalSteps - self.soFarSteps) > 0{
+                            DispatchQueue.main.async {
+                                self.leftStepLabel.text = "\(self.goalSteps - self.soFarSteps)"
+                            }
+                        }else{
+                            DispatchQueue.main.async {
+                                self.leftStepLabel.text = "Goal achieved!"
+                            }
                         }
                        
-                    }
+                    
+                }
                 }
                 
                 pedometer.startUpdates(from: Date())
@@ -115,6 +171,17 @@ class ViewController: UIViewController, GameViewControllerDelegate{
                                     DispatchQueue.main.async {
                                         self.updatingLabel.text = "\(self.updatingSteps)"
                                     }
+                                    
+                                    if Int(self.goalSteps - self.updatingSteps) > 0{
+                                        DispatchQueue.main.async {
+                                            self.leftStepLabel.text = "\(self.goalSteps - self.updatingSteps)"
+                                        }
+                                    }else{
+                                        DispatchQueue.main.async {
+                                            self.leftStepLabel.text = "Goal achieved!"
+                                        }
+                                    }
+                                    
                                 }
                             }
                 
