@@ -10,7 +10,9 @@ import CoreMotion
 
 class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDelegate{
     
-
+    @IBOutlet weak var gameLabel: UILabel!
+    @IBOutlet weak var gamebutton: UIButton!
+    
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var yesterdayStepLabel: UILabel!
     @IBOutlet weak var updatingLabel: UILabel!
@@ -46,6 +48,7 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
         startPedometerMonitoring()
         
         goalField.delegate = self
+        gamebutton.isHidden = true
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -151,10 +154,14 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
                         if Int(self.goalSteps - self.soFarSteps) > 0{
                             DispatchQueue.main.async {
                                 self.leftStepLabel.text = "\(self.goalSteps - self.soFarSteps)"
+                                self.gamebutton.isHidden = true
+                                self.gameLabel.text = "The game is locked"
                             }
                         }else{
                             DispatchQueue.main.async {
                                 self.leftStepLabel.text = "Goal achieved!"
+                                self.gamebutton.isHidden = false
+                                self.gameLabel.text = "The game is unlocked, click the button to play!!"
                             }
                         }
                        
@@ -173,10 +180,14 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
                                     if Int(self.goalSteps - self.updatingSteps) > 0{
                                         DispatchQueue.main.async {
                                             self.leftStepLabel.text = "\(self.goalSteps - self.updatingSteps)"
+                                            self.gamebutton.isHidden = true
+                                            self.gameLabel.text = "The game is locked"
                                         }
                                     }else{
                                         DispatchQueue.main.async {
                                             self.leftStepLabel.text = "Goal achieved!"
+                                            self.gamebutton.isHidden = false
+                                            self.gameLabel.text = "The game is unlocked, click the button to play!!"
                                         }
                                     }
                                     
@@ -200,9 +211,16 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
 
     func CatchResult(controller:GameViewController, data:Int){
         GameResult = data                    // Got the game result
-        print("I got ", GameResult)  // 0 means has not play the game
+        if (GameResult == 1){
+            self.gameLabel.text = "You lost the game, please try it tomorrow"
+        }
+        else{
+            self.gameLabel.text = "You won the game, you goal step now -5! "
+            self.goalSteps = self.goalSteps - 5    // as a bonus, your goal step will -5.
+        }                           // 0 means has not play the game
                                     // 1 means has played but failed
                                     // 2 means has played and won
+        self.gamebutton.isHidden = true
     }
     
     
