@@ -42,6 +42,8 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        gamebutton.layer.masksToBounds = true
+        gamebutton.layer.cornerRadius = 7
         gifView.loadGif(name: "walking")
         loadGoal()
         
@@ -227,6 +229,10 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
     
     
     @IBAction func setGoal(_ sender: Any) {
+        
+    }
+    @IBAction func didCancelKeyboard(_ sender: Any) {
+        self.goalField.resignFirstResponder()
         
     }
     
