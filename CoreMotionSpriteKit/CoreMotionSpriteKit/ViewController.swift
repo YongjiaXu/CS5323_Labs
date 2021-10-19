@@ -16,7 +16,7 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var yesterdayStepLabel: UILabel!
     @IBOutlet weak var updatingLabel: UILabel!
-    @IBOutlet weak var goalField: UITextField!
+    @IBOutlet weak var goalField: UITextField! //the only text field in the app
     @IBOutlet weak var userFeedBack: UILabel!
     @IBOutlet weak var leftStepLabel: UILabel!
     
@@ -27,7 +27,6 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
     var soFarSteps:Int = 0
     var goalSteps:Int = 1000{
         didSet{
-            
             userFeedBack.text = "\(goalSteps)"
             }
         }
@@ -51,6 +50,8 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
         gamebutton.isHidden = true
     }
 
+    //receive the number only data in the textfield and set goal to that number. If you have alredy walked
+    //1000 today and you set a goal of 500, this function will set leftStepLabel.text to "Goal achieved"
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if let num = Int(textField.text!){
@@ -64,10 +65,14 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
         if Int(self.goalSteps - self.soFarSteps) > 0{
             DispatchQueue.main.async {
                 self.leftStepLabel.text = "\(self.goalSteps - self.soFarSteps)"
+                self.gamebutton.isHidden = true
+                self.gameLabel.text = "The game is locked"
             }
         }else{
             DispatchQueue.main.async {
                 self.leftStepLabel.text = "Goal achieved!"
+                self.gamebutton.isHidden = false
+                self.gameLabel.text = "The game is unlocked, click the button to play!!"
             }
         }
         
@@ -75,23 +80,16 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
         return true
     }
     
-    @IBAction func setGoal(_ sender: Any) {
-        
-    }
-    
-    
+    // load goal from GoalStep which is a key in Info.plist and set goalSteps with that number
     func loadGoal(){
         if UserDefaults.standard.object(forKey: "GoalStep") == nil {
             UserDefaults.standard.set(self.goalSteps, forKey: "GoalStep")
         }
         self.goalSteps = UserDefaults.standard.object(forKey: "GoalStep") as! Int
-        
-        
-        
     }
     
     
-    
+    // monitor user's activity(Walking, Running, Cycling, Driving, Still, and Unknown)
     func startActivityMonitoring(){
             if CMMotionActivityManager.isActivityAvailable(){
                 self.activityManager.startActivityUpdates(to: OperationQueue.main)
@@ -123,6 +121,7 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
             
         }
     
+    // three steps in this function
     func startPedometerMonitoring(){
             // check if pedometer is okay to use
             if CMPedometer.isStepCountingAvailable(){
@@ -130,6 +129,7 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
                 let startYesterday = startToday.addingTimeInterval(-60*60*24)
                 //var todaySteps = 0
                                                       
+                // The first step is loading the step from the start of yesterday to the end of yesterday
                 pedometer.queryPedometerData(from: startYesterday, to:startToday)
                 {(pedData:CMPedometerData?, error:Error?)->Void in
                     if let data = pedData {
@@ -140,7 +140,8 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
                     }
                 }
                 
-                
+                //The second step is loading steps from the start of today to now as soFarSteps
+                //If soFarSteps >= goalSteps, show "Goal achieved"
                 pedometer.queryPedometerData(from: startToday, to: Date())
                 {(pedData:CMPedometerData?, error:Error?)->Void in
                     if let data = pedData {
@@ -154,14 +155,14 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
                         if Int(self.goalSteps - self.soFarSteps) > 0{
                             DispatchQueue.main.async {
                                 self.leftStepLabel.text = "\(self.goalSteps - self.soFarSteps)"
-                                self.gamebutton.isHidden = true
-                                self.gameLabel.text = "The game is locked"
+                                //self.gamebutton.isHidden = true
+                                //self.gameLabel.text = "The game is locked"
                             }
                         }else{
                             DispatchQueue.main.async {
                                 self.leftStepLabel.text = "Goal achieved!"
-                                self.gamebutton.isHidden = false
-                                self.gameLabel.text = "The game is unlocked, click the button to play!!"
+                                //self.gamebutton.isHidden = false
+                                //self.gameLabel.text = "The game is unlocked, click the button to play!!"
                             }
                         }
                        
@@ -169,6 +170,7 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
                 }
                 }
                 
+                //The third step is keeping unpdating the current steps and check if the steps achieve the goal or not
                 pedometer.startUpdates(from: Date())
                             {(pedData:CMPedometerData?, error:Error?)->Void in
                                 if let data = pedData {
@@ -190,7 +192,6 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
                                             self.gameLabel.text = "The game is unlocked, click the button to play!!"
                                         }
                                     }
-                                    
                                 }
                             }
                 
@@ -205,7 +206,6 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
         }
            
     }
-    
     
     
 
@@ -224,7 +224,9 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
     }
     
     
-    
+    @IBAction func setGoal(_ sender: Any) {
+        
+    }
     
 }
 
