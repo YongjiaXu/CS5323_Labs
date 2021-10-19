@@ -23,7 +23,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     // timer counts down. reference: https://stackoverflow.com/questions/23978209/spritekit-creating-a-timer
-    private var counter = 21 {
+    private var counter = 11 {
         didSet {
             self.TimerLabel.text = "Remaining: \(self.counter) sec"
             

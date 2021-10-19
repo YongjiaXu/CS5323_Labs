@@ -18,6 +18,7 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
     @IBOutlet weak var updatingLabel: UILabel!
     @IBOutlet weak var goalField: UITextField! //the only text field in the app
     @IBOutlet weak var userFeedBack: UILabel!
+    @IBOutlet weak var gifView: UIImageView!
     @IBOutlet weak var leftStepLabel: UILabel!
     
     let activityManager = CMMotionActivityManager()
@@ -41,6 +42,7 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        gifView.loadGif(name: "walking")
         loadGoal()
         
         startActivityMonitoring()
@@ -59,20 +61,20 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
             UserDefaults.standard.set(self.goalSteps, forKey: "GoalStep")
 
         }else{
-            userFeedBack.text = "Pleas enter numbers only"
+            userFeedBack.text = "Number Only!!"
         }
         
         if Int(self.goalSteps - self.soFarSteps) > 0{
             DispatchQueue.main.async {
                 self.leftStepLabel.text = "\(self.goalSteps - self.soFarSteps)"
                 self.gamebutton.isHidden = true
-                self.gameLabel.text = "The game is locked"
+                self.gameLabel.text = "Keep it up! The game is still locked."
             }
         }else{
             DispatchQueue.main.async {
                 self.leftStepLabel.text = "Goal achieved!"
                 self.gamebutton.isHidden = false
-                self.gameLabel.text = "The game is unlocked, click the button to play!!"
+                self.gameLabel.text = "Congratulation! Play the game!"
             }
         }
         
@@ -155,14 +157,14 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
                         if Int(self.goalSteps - self.soFarSteps) > 0{
                             DispatchQueue.main.async {
                                 self.leftStepLabel.text = "\(self.goalSteps - self.soFarSteps)"
-                                //self.gamebutton.isHidden = true
-                                //self.gameLabel.text = "The game is locked"
+                                self.gamebutton.isHidden = true
+                                self.gameLabel.text = "Keep it up! The game is still locked."
                             }
                         }else{
                             DispatchQueue.main.async {
                                 self.leftStepLabel.text = "Goal achieved!"
-                                //self.gamebutton.isHidden = false
-                                //self.gameLabel.text = "The game is unlocked, click the button to play!!"
+                                self.gamebutton.isHidden = false
+                                self.gameLabel.text = "Congratulation! Play the game!"
                             }
                         }
                        
@@ -183,13 +185,13 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
                                         DispatchQueue.main.async {
                                             self.leftStepLabel.text = "\(self.goalSteps - self.updatingSteps)"
                                             self.gamebutton.isHidden = true
-                                            self.gameLabel.text = "The game is locked"
+                                            self.gameLabel.text = "Keep it up! The game is still locked."
                                         }
                                     }else{
                                         DispatchQueue.main.async {
                                             self.leftStepLabel.text = "Goal achieved!"
                                             self.gamebutton.isHidden = false
-                                            self.gameLabel.text = "The game is unlocked, click the button to play!!"
+                                            self.gameLabel.text = "Congratulation! Play the game!"
                                         }
                                     }
                                 }
