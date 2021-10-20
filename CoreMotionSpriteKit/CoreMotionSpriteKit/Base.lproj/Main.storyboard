@@ -151,10 +151,9 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The game is locked" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AeS-UM-vjN">
-                                <rect key="frame" x="31" y="679" width="360" height="20"/>
+                                <rect key="frame" x="38" y="679" width="338" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="360" id="3hZ-o4-3hJ"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="360" id="qi3-0T-TVg"/>
+                                    <constraint firstAttribute="width" constant="338" id="Pna-ic-CNo"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -182,7 +181,6 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="kkB-hP-j4j" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="31" id="2yD-Ny-uKh"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="AeS-UM-vjN" secondAttribute="bottom" constant="163" id="5Dc-z3-0wH"/>
                             <constraint firstItem="UKW-vs-ix7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="31" id="7ny-lD-1pl"/>
                             <constraint firstItem="b2d-h2-F9V" firstAttribute="top" secondItem="fQ6-Aq-k9y" secondAttribute="bottom" constant="7.5" id="8Lf-7e-wL0"/>
                             <constraint firstItem="fQ6-Aq-k9y" firstAttribute="top" secondItem="kkB-hP-j4j" secondAttribute="bottom" constant="23.5" id="97N-PN-0Xh"/>
@@ -191,7 +189,7 @@
                             <constraint firstItem="Zph-16-0MG" firstAttribute="leading" secondItem="zLy-Bf-rtg" secondAttribute="trailing" constant="32" id="AxM-dg-iCk"/>
                             <constraint firstItem="zLy-Bf-rtg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="31" id="BcB-k7-9Hn"/>
                             <constraint firstItem="kkB-hP-j4j" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="33" id="FjA-TC-QZw"/>
-                            <constraint firstItem="AeS-UM-vjN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="4" id="KWJ-uV-7z9"/>
+                            <constraint firstItem="AeS-UM-vjN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="IND-wB-Hj7"/>
                             <constraint firstItem="Zph-16-0MG" firstAttribute="top" secondItem="b2d-h2-F9V" secondAttribute="bottom" constant="8" symbolic="YES" id="Nrp-4S-eii"/>
                             <constraint firstItem="du7-7O-oIg" firstAttribute="leading" secondItem="IyE-GI-KHR" secondAttribute="trailing" constant="122" id="Oai-22-lSU"/>
                             <constraint firstItem="GWr-Sm-DpF" firstAttribute="top" secondItem="UKW-vs-ix7" secondAttribute="bottom" constant="8" symbolic="YES" id="PC0-Pz-liu"/>
@@ -206,6 +204,7 @@
                             <constraint firstItem="eED-TI-wZD" firstAttribute="leading" secondItem="RjZ-fK-QaQ" secondAttribute="trailing" constant="32" id="hak-2n-kV1"/>
                             <constraint firstItem="5yD-1K-tLs" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="31" id="oIg-8Q-lPc"/>
                             <constraint firstItem="UKW-vs-ix7" firstAttribute="top" secondItem="Jg9-9Y-p4N" secondAttribute="bottom" constant="46" id="sCG-cg-mT5"/>
+                            <constraint firstItem="AeS-UM-vjN" firstAttribute="top" secondItem="IyE-GI-KHR" secondAttribute="bottom" constant="30" id="tsV-wR-Jsm"/>
                             <constraint firstItem="WRX-Hc-YlV" firstAttribute="top" secondItem="b2d-h2-F9V" secondAttribute="bottom" constant="40" id="uPa-Dw-zc3"/>
                             <constraint firstItem="eki-4f-yqZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="31" id="x3w-bm-Wuy"/>
                             <constraint firstItem="RjZ-fK-QaQ" firstAttribute="top" secondItem="zLy-Bf-rtg" secondAttribute="bottom" constant="19" id="xIB-Re-cEf"/>
