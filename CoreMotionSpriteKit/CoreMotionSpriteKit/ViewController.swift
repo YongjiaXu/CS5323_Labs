@@ -26,7 +26,7 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
     
     
     var soFarSteps:Int = 0
-    var goalSteps:Int = 1000{
+    var goalSteps:Int = 8000{
         didSet{
             userFeedBack.text = "\(goalSteps)"
             }
@@ -79,7 +79,8 @@ class ViewController: UIViewController,UITextFieldDelegate,GameViewControllerDel
                 self.gameLabel.text = "Congratulation! Play the game!"
             }
         }
-        
+        print(self.goalSteps)
+        print(self.soFarSteps)
         textField.resignFirstResponder()
         return true
     }
