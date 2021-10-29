@@ -11,7 +11,6 @@
         <!--Tab Bar Controller-->
         <scene sceneID="VSZ-uR-zCs">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zYB-Tn-95m" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tabBarController id="zi8-Jp-7fy" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="sje-lZ-a40">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
@@ -23,6 +22,7 @@
                         <segue destination="d03-Aa-AoL" kind="relationship" relationship="viewControllers" id="Pc6-Af-PMn"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zYB-Tn-95m" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1122" y="116"/>
         </scene>
@@ -80,7 +80,7 @@
         <!--Module B-->
         <scene sceneID="XXj-Ci-gBv">
             <objects>
-                <viewController title="Module B" id="d03-Aa-AoL" sceneMemberID="viewController">
+                <viewController title="Module B" id="d03-Aa-AoL" customClass="ModuleBViewController" customModule="ImageLab" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Xpr-Au-oXf"/>
                         <viewControllerLayoutGuide type="bottom" id="Nha-91-05N"/>
@@ -88,14 +88,31 @@
                     <view key="view" contentMode="scaleToFill" id="7AG-Dv-ZNc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qUT-P1-fEk">
+                                <rect key="frame" x="16" y="41" width="343" height="23"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="qUT-P1-fEk" firstAttribute="trailing" secondItem="7AG-Dv-ZNc" secondAttribute="trailingMargin" id="6Zn-ib-u5K"/>
+                            <constraint firstItem="qUT-P1-fEk" firstAttribute="centerX" secondItem="7AG-Dv-ZNc" secondAttribute="centerX" id="BNn-1u-CTR"/>
+                            <constraint firstItem="qUT-P1-fEk" firstAttribute="leading" secondItem="7AG-Dv-ZNc" secondAttribute="leadingMargin" id="Nxq-cg-6uP"/>
+                            <constraint firstItem="qUT-P1-fEk" firstAttribute="top" secondItem="Xpr-Au-oXf" secondAttribute="bottom" constant="41" id="TLe-2N-Ya8"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Module B" id="IIg-Qq-Xrk"/>
                     <navigationItem key="navigationItem" id="PQa-PP-JWx"/>
+                    <connections>
+                        <outlet property="heartBeat" destination="qUT-P1-fEk" id="Vm4-1g-0bQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T7D-La-tiO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-673" y="860"/>
+            <point key="canvasLocation" x="-674.39999999999998" y="859.52023988005999"/>
         </scene>
     </scenes>
     <resources>
