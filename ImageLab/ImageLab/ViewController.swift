@@ -36,26 +36,17 @@ class ViewController: UIViewController   {
     
     @IBOutlet weak var togglecamera: UIButton!
     
-    @IBOutlet weak var toggleflash: UIButton!
-    //MARK: Outlets in view
-    @IBOutlet weak var flashSlider: UISlider!
-    @IBOutlet weak var stageLabel: UILabel!
-    
     //MARK: ViewController Hierarchy
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setupFilters()
 
-        
         // setup the OpenCV bridge nose detector, from file
         self.bridge.loadHaarCascade(withFilename: "nose")
         
         self.videoManager = VideoAnalgesic(mainView: self.view)    // Change the camera to back
         self.videoManager.setCameraPosition(position: AVCaptureDevice.Position.back)
-        
-        
-        
         self.videoManager.setProcessingBlock(newProcessBlock: self.processImageSwift)
         
         if !videoManager.isRunning{
@@ -116,52 +107,10 @@ class ViewController: UIViewController   {
                 return applyFiltersToFaces(inputImage: inputImage, features: faces)
     }
     
-    //MARK: Setup Face Detection
-    
-    
-    
-    
-    // change the type of processing done in OpenCV
-    @IBAction func swipeRecognized(_ sender: UISwipeGestureRecognizer) {
-        switch sender.direction {
-        case .left:
-            self.bridge.processType += 1
-        case .right:
-            self.bridge.processType -= 1
-        default:
-            break
-            
-        }
-        
-        stageLabel.text = "Stage: \(self.bridge.processType)"
-
-    }
-    
-    //MARK: Convenience Methods for UI Flash and Camera Toggle
-    @IBAction func flash(_ sender: AnyObject) {
-        if(self.videoManager.toggleFlash()){
-            self.flashSlider.value = 1.0
-        }
-        else{
-            self.flashSlider.value = 0.0
-        }
-    }
-    
     @IBAction func switchCamera(_ sender: AnyObject) {
         self.videoManager.toggleCameraPosition()
     }
     
-    @IBAction func setFlashLevel(_ sender: UISlider) {
-        if(sender.value>0.0){
-            let val = self.videoManager.turnOnFlashwithLevel(sender.value)
-            if val {
-                print("Flash return, no errors.")
-            }
-        }
-        else if(sender.value==0.0){
-            self.videoManager.turnOffFlash()
-        }
-    }
 
    
 }
