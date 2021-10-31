@@ -63,8 +63,20 @@
                                 <color key="textColor" systemColor="opaqueSeparatorColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Smile or not" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hFp-M8-Bp4">
+                                <rect key="frame" x="276" y="589.5" width="91" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemOrangeColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eye status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xM0-I4-fdw">
+                                <rect key="frame" x="276" y="542" width="79" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemOrangeColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="x1J-ym-aid">
-                                <rect key="frame" x="213" y="536" width="51" height="31"/>
+                                <rect key="frame" x="213" y="537" width="51" height="31"/>
                                 <connections>
                                     <action selector="EyeMouthDetectionSwitch:" destination="BYZ-38-t0r" eventType="valueChanged" id="Uix-Yd-A5Y"/>
                                 </connections>
@@ -75,14 +87,18 @@
                         <constraints>
                             <constraint firstItem="igg-sX-lpG" firstAttribute="top" secondItem="Y0f-Ze-AAU" secondAttribute="bottom" constant="21" id="ChJ-wp-n2E"/>
                             <constraint firstItem="igg-sX-lpG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="DSk-YR-evM"/>
+                            <constraint firstItem="h5k-r1-Y0R" firstAttribute="top" secondItem="x1J-ym-aid" secondAttribute="bottom" constant="14" id="EsO-vP-zGL"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="h5k-r1-Y0R" secondAttribute="bottom" constant="5" id="KfP-Dh-MpU"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="igg-sX-lpG" secondAttribute="bottom" constant="8" symbolic="YES" id="NhZ-RR-7Nw"/>
+                            <constraint firstItem="hFp-M8-Bp4" firstAttribute="top" secondItem="xM0-I4-fdw" secondAttribute="bottom" constant="26.5" id="SUe-HX-zri"/>
+                            <constraint firstItem="xM0-I4-fdw" firstAttribute="leading" secondItem="x1J-ym-aid" secondAttribute="trailing" constant="14" id="UDh-NZ-uWn"/>
                             <constraint firstItem="HqB-mz-Xht" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="UZ9-4n-7Sq"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="hFp-M8-Bp4" secondAttribute="bottom" constant="8" symbolic="YES" id="VdH-Jd-q4N"/>
                             <constraint firstItem="HqB-mz-Xht" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="cSS-eF-7HJ"/>
                             <constraint firstItem="h5k-r1-Y0R" firstAttribute="leading" secondItem="igg-sX-lpG" secondAttribute="trailing" constant="71.5" id="dTZ-61-BIx"/>
-                            <constraint firstItem="x1J-ym-aid" firstAttribute="leading" secondItem="Y0f-Ze-AAU" secondAttribute="trailing" constant="11" id="fvU-Wm-6bh"/>
                             <constraint firstItem="Y0f-Ze-AAU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="sPR-5L-Gdb"/>
-                            <constraint firstItem="h5k-r1-Y0R" firstAttribute="top" secondItem="x1J-ym-aid" secondAttribute="bottom" constant="15" id="xKw-Qf-Jjh"/>
+                            <constraint firstItem="hFp-M8-Bp4" firstAttribute="leading" secondItem="h5k-r1-Y0R" secondAttribute="trailing" constant="14" id="tcv-iV-yRV"/>
+                            <constraint firstItem="x1J-ym-aid" firstAttribute="leading" secondItem="Y0f-Ze-AAU" secondAttribute="trailing" constant="11" id="vLy-xa-WzV"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="eRc-Wo-xsu" appends="YES" id="QkX-2I-SHe"/>
@@ -92,6 +108,8 @@
                     <tabBarItem key="tabBarItem" title="Module A" id="Wks-NF-0Fe"/>
                     <navigationItem key="navigationItem" id="0nZ-66-7zb"/>
                     <connections>
+                        <outlet property="eyeLabel" destination="xM0-I4-fdw" id="X79-rS-vbS"/>
+                        <outlet property="smileLabel" destination="hFp-M8-Bp4" id="VI1-9F-1e1"/>
                         <outlet property="togglecamera" destination="HqB-mz-Xht" id="fKZ-4Y-5ZV"/>
                     </connections>
                 </viewController>
@@ -153,6 +171,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

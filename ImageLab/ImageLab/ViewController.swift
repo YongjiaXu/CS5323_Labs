@@ -18,6 +18,11 @@ class ViewController: UIViewController   {
     
     var faceDetection = true //face detection on as default
     var eyeMouthDetection = false //eye&mouth detection off as default
+    var manyFaces = false
+    var leftEyeBlink = false
+    var rightEyeBlink = false
+    var leftEyeClose = false
+    var righteyeClose = false
     
     var videoManager:VideoAnalgesic! = nil
     let bridge = OpenCVBridge()
@@ -36,6 +41,8 @@ class ViewController: UIViewController   {
         }()
     
     @IBOutlet weak var togglecamera: UIButton!
+    @IBOutlet weak var smileLabel: UILabel!
+    @IBOutlet weak var eyeLabel: UILabel!
     
     //MARK: ViewController Hierarchy
     override func viewDidLoad() {
@@ -116,6 +123,33 @@ class ViewController: UIViewController   {
                     }
                 }
                 
+                if !manyFaces {
+                    if f.hasSmile{
+                        DispatchQueue.main.async{
+                            self.smileLabel.text = "Smiling!"
+                        }
+                    }else{
+                        DispatchQueue.main.async{
+                            self.smileLabel.text = "Not smiling!"
+                        }
+                    }
+                }else{
+                    DispatchQueue.main.async{
+                        self.smileLabel.text = ""
+                    }
+                }
+                
+                if !manyFaces{
+                    if f.leftEyeClosed{
+                        
+                    }
+                    
+                }else{
+                    DispatchQueue.main.async{
+                        self.eyeLabel.text = ""
+                    }
+                }
+                
             }
             return retImage
         }
@@ -127,8 +161,14 @@ class ViewController: UIViewController   {
                 let faces = getFaces(img: inputImage)
                 
                 // if no faces, just return original image
-                if faces.count == 0 { return inputImage }
-                
+                if faces.count == 0 {
+                    return inputImage
+                }else if faces.count == 1{
+                    manyFaces = false
+                }else{
+                    manyFaces = true
+                }
+        
                 //otherwise apply the filters to the faces
                 return applyFiltersToFaces(inputImage: inputImage, features: faces)
     }
