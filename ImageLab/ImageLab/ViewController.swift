@@ -12,7 +12,9 @@ import AVFoundation
 class ViewController: UIViewController   {
 
     //MARK: Class Properties
-    var filters : [CIFilter]! = nil
+    var filter : CIFilter! = nil
+    var eyeFilter : CIFilter! = nil
+    var mouthFilter : CIFilter! = nil
     var videoManager:VideoAnalgesic! = nil
     let pinchFilterIndex = 2
     var isovering = false
@@ -64,12 +66,12 @@ class ViewController: UIViewController   {
     
     //MARK: Setup filtering
         func setupFilters(){
-            filters = []
-            
-            let filterPinch = CIFilter(name:"CIBumpDistortion")!
-            filterPinch.setValue(-0.5, forKey: "inputScale")
-            filterPinch.setValue(75, forKey: "inputRadius")
-            filters.append(filterPinch)
+            filter = CIFilter(name:"CITwirlDistortion")
+//            filters = []
+//            let filterPinch = CIFilter(name:"CIBumpDistortion")!
+//            filterPinch.setValue(-0.5, forKey: "inputScale")
+//            filterPinch.setValue(75, forKey: "inputRadius")
+//            filters.append(filterPinch)
             
         }
     
@@ -91,12 +93,12 @@ class ViewController: UIViewController   {
                 filterCenter.y = f.bounds.midY
                 
                 //do for each filter (assumes all filters have property, "inputCenter")
-                for filt in filters{
-                    filt.setValue(retImage, forKey: kCIInputImageKey)
-                    filt.setValue(CIVector(cgPoint: filterCenter), forKey: "inputCenter")
+                    filter.setValue(retImage, forKey: kCIInputImageKey)
+                    filter.setValue(CIVector(cgPoint: filterCenter), forKey: "inputCenter")
+                    filter.setValue(f.bounds.width/2, forKey: "inputRadius")
                     // could also manipulate the radius of the filter based on face size!
-                    retImage = filt.outputImage!
-                }
+                    retImage = filter.outputImage!
+                
             }
             return retImage
         }
