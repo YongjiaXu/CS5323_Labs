@@ -14,6 +14,8 @@ class ViewController: UIViewController   {
     //MARK: Class Properties
     var filter : CIFilter! = nil //filter for face and eyes
     var mouthFilter : CIFilter! = nil//filter for mouth
+    var faceDetection = true
+    var eyeMouthDetection = false
     var videoManager:VideoAnalgesic! = nil
     let bridge = OpenCVBridge()
     
@@ -79,10 +81,12 @@ class ViewController: UIViewController   {
                 filterCenter.y = f.bounds.midY
                 
                 //do for each filter (assumes all filters have property, "inputCenter")
+                if faceDetection{
                     filter.setValue(retImage, forKey: kCIInputImageKey)
                     filter.setValue(CIVector(cgPoint: filterCenter), forKey: "inputCenter")
                     filter.setValue(f.bounds.width*2/3, forKey: "inputRadius")
                     retImage = filter.outputImage!
+                }
                 
             }
             return retImage
@@ -105,7 +109,14 @@ class ViewController: UIViewController   {
         self.videoManager.toggleCameraPosition()
     }
     
-
+    @IBAction func FaceDetectionSwitch(_ sender: UISwitch) {
+        if faceDetection == true{
+            faceDetection = false
+        }else if faceDetection == false{
+            faceDetection = true
+        }
+    }
+    
    
 }
 

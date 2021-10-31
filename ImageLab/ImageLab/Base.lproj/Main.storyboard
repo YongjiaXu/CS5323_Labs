@@ -38,17 +38,49 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HqB-mz-Xht">
-                                <rect key="frame" x="16" y="41" width="104" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HqB-mz-Xht">
+                                <rect key="frame" x="16" y="20" width="104" height="30"/>
                                 <state key="normal" title="Toggle Camera"/>
                                 <connections>
                                     <action selector="switchCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8o5-A8-Yvy"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h5k-r1-Y0R">
+                                <rect key="frame" x="213" y="582" width="51" height="31"/>
+                                <connections>
+                                    <action selector="FaceDetectionSwitch:" destination="BYZ-38-t0r" eventType="valueChanged" id="6Nw-fo-7wV"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Face detection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="igg-sX-lpG">
+                                <rect key="frame" x="16" y="585" width="125.5" height="25"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="19"/>
+                                <color key="textColor" systemColor="opaqueSeparatorColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eye&amp;Mouth detection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y0f-Ze-AAU">
+                                <rect key="frame" x="16" y="539" width="186" height="25"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="19"/>
+                                <color key="textColor" systemColor="opaqueSeparatorColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="x1J-ym-aid">
+                                <rect key="frame" x="213" y="536" width="51" height="31"/>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="igg-sX-lpG" firstAttribute="top" secondItem="Y0f-Ze-AAU" secondAttribute="bottom" constant="21" id="ChJ-wp-n2E"/>
+                            <constraint firstItem="igg-sX-lpG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="DSk-YR-evM"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="h5k-r1-Y0R" secondAttribute="bottom" constant="5" id="KfP-Dh-MpU"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="igg-sX-lpG" secondAttribute="bottom" constant="8" symbolic="YES" id="NhZ-RR-7Nw"/>
+                            <constraint firstItem="HqB-mz-Xht" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="UZ9-4n-7Sq"/>
+                            <constraint firstItem="HqB-mz-Xht" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="cSS-eF-7HJ"/>
+                            <constraint firstItem="h5k-r1-Y0R" firstAttribute="leading" secondItem="igg-sX-lpG" secondAttribute="trailing" constant="71.5" id="dTZ-61-BIx"/>
+                            <constraint firstItem="x1J-ym-aid" firstAttribute="leading" secondItem="Y0f-Ze-AAU" secondAttribute="trailing" constant="11" id="fvU-Wm-6bh"/>
+                            <constraint firstItem="Y0f-Ze-AAU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="sPR-5L-Gdb"/>
+                            <constraint firstItem="h5k-r1-Y0R" firstAttribute="top" secondItem="x1J-ym-aid" secondAttribute="bottom" constant="15" id="xKw-Qf-Jjh"/>
+                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="eRc-Wo-xsu" appends="YES" id="QkX-2I-SHe"/>
                             <outletCollection property="gestureRecognizers" destination="nUe-kP-Uzk" appends="YES" id="Xdh-aW-cP8"/>
@@ -72,7 +104,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1622" y="860"/>
+            <point key="canvasLocation" x="-1623.2" y="859.52023988005999"/>
         </scene>
         <!--Module B-->
         <scene sceneID="XXj-Ci-gBv">
@@ -113,6 +145,9 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
