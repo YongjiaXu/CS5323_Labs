@@ -16,9 +16,6 @@ class ViewController: UIViewController   {
     var eyeFilter : CIFilter! = nil
     var mouthFilter : CIFilter! = nil
     var videoManager:VideoAnalgesic! = nil
-    let pinchFilterIndex = 2
-    var isovering = false
-    var notoveringtimer = 0
     let bridge = OpenCVBridge()
     
     lazy var detector:CIDetector! = {
