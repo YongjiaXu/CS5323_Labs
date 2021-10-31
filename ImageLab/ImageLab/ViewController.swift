@@ -14,8 +14,11 @@ class ViewController: UIViewController   {
     //MARK: Class Properties
     var filter : CIFilter! = nil //filter for face and eyes
     var mouthFilter : CIFilter! = nil//filter for mouth
-    var faceDetection = true
-    var eyeMouthDetection = false
+    var eyeFilter : CIFilter! = nil//filter for eye
+    
+    var faceDetection = true //face detection on as default
+    var eyeMouthDetection = false //eye&mouth detection off as default
+    
     var videoManager:VideoAnalgesic! = nil
     let bridge = OpenCVBridge()
     
@@ -55,17 +58,15 @@ class ViewController: UIViewController   {
     
     //MARK: Setup filtering
         func setupFilters(){
-            filter = CIFilter(name:"CITwirlDistortion")
-//            let filterPinch = CIFilter(name:"CIBumpDistortion")!
-//            filterPinch.setValue(-0.5, forKey: "inputScale")
-//            filterPinch.setValue(75, forKey: "inputRadius")
-//            filters.append(filterPinch)
-            
+            filter = CIFilter(name:"CIBumpDistortion") //set face filter to CIBumpDistortion
+            eyeFilter = CIFilter(name:"CIVortexDistortion") //set eye filter to CIVortexDistortion
+            mouthFilter = CIFilter(name: "CITwirlDistortion")//set mouth filter to CITwirlDistortion
         }
     
     func getFaces(img:CIImage) -> [CIFaceFeature]{
         // this ungodly mess makes sure the image is the correct orientation
-        let optsFace = [CIDetectorImageOrientation:self.videoManager.ciOrientation]
+        // add CIDetectorEyeBlink and CIDetectorSmile
+        let optsFace = [CIDetectorImageOrientation:self.videoManager.ciOrientation, CIDetectorEyeBlink: true, CIDetectorSmile: true] as [String : Any]
         // get Face Features
         return self.detector.features(in: img, options: optsFace) as! [CIFaceFeature]
         
@@ -81,11 +82,38 @@ class ViewController: UIViewController   {
                 filterCenter.y = f.bounds.midY
                 
                 //do for each filter (assumes all filters have property, "inputCenter")
+                //if face detection is on
                 if faceDetection{
                     filter.setValue(retImage, forKey: kCIInputImageKey)
                     filter.setValue(CIVector(cgPoint: filterCenter), forKey: "inputCenter")
-                    filter.setValue(f.bounds.width*2/3, forKey: "inputRadius")
+                    filter.setValue(f.bounds.width*4/5, forKey: "inputRadius")
                     retImage = filter.outputImage!
+                }
+                //if eye&mouth detection is on
+                if eyeMouthDetection{
+                    //if facefeatures have left eye
+                    if f.hasLeftEyePosition{
+                        eyeFilter.setValue(retImage, forKey: kCIInputImageKey)
+                        eyeFilter.setValue(CIVector(cgPoint: f.leftEyePosition), forKey: "inputCenter")//set center on left eye
+                        eyeFilter.setValue(f.bounds.width/10, forKey: "inputRadius")
+                        retImage = eyeFilter.outputImage!
+                    }
+                    
+                    //if facefeatures have right eye
+                    if f.hasRightEyePosition{
+                        eyeFilter.setValue(retImage, forKey: kCIInputImageKey)
+                        eyeFilter.setValue(CIVector(cgPoint: f.rightEyePosition), forKey: "inputCenter")//set center on right eye
+                        eyeFilter.setValue(f.bounds.width/10, forKey: "inputRadius")
+                        retImage = eyeFilter.outputImage!
+                    }
+                    
+                    //if facefeatures have mouth
+                    if f.hasMouthPosition{
+                        mouthFilter.setValue(retImage, forKey: kCIInputImageKey)
+                        mouthFilter.setValue(CIVector(cgPoint: f.mouthPosition), forKey: "inputCenter")//set center on mouth
+                        mouthFilter.setValue(f.bounds.width/7, forKey: "inputRadius")
+                        retImage = mouthFilter.outputImage!
+                    }
                 }
                 
             }
@@ -108,7 +136,7 @@ class ViewController: UIViewController   {
     @IBAction func switchCamera(_ sender: AnyObject) {
         self.videoManager.toggleCameraPosition()
     }
-    
+    // turn on/off face detection and set faceDetection to true/false
     @IBAction func FaceDetectionSwitch(_ sender: UISwitch) {
         if faceDetection == true{
             faceDetection = false
@@ -116,7 +144,14 @@ class ViewController: UIViewController   {
             faceDetection = true
         }
     }
+    //turn on/off eye&mouth detection and set eyeMouthDetection to true/false
+    @IBAction func EyeMouthDetectionSwitch(_ sender: UISwitch) {
+        if eyeMouthDetection == true{
+            eyeMouthDetection = false
+        }else if eyeMouthDetection == false{
+            eyeMouthDetection = true
+        }
+    }
     
-   
 }
 
