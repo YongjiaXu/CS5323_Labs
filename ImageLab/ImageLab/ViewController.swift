@@ -12,9 +12,9 @@ import AVFoundation
 class ViewController: UIViewController   {
 
     //MARK: Class Properties
-    var filter : CIFilter! = nil
-    var eyeFilter : CIFilter! = nil
-    var mouthFilter : CIFilter! = nil
+    var filter : CIFilter! = nil //filter for face
+    var eyeFilter : CIFilter! = nil//filter for eye
+    var mouthFilter : CIFilter! = nil//filter for mouth
     var videoManager:VideoAnalgesic! = nil
     let bridge = OpenCVBridge()
     
@@ -55,7 +55,7 @@ class ViewController: UIViewController   {
     //MARK: Setup filtering
         func setupFilters(){
             filter = CIFilter(name:"CITwirlDistortion")
-//            filters = []
+            eyeFilter = CIFilter(name:"CITwirlDistortion")
 //            let filterPinch = CIFilter(name:"CIBumpDistortion")!
 //            filterPinch.setValue(-0.5, forKey: "inputScale")
 //            filterPinch.setValue(75, forKey: "inputRadius")
@@ -83,8 +83,7 @@ class ViewController: UIViewController   {
                 //do for each filter (assumes all filters have property, "inputCenter")
                     filter.setValue(retImage, forKey: kCIInputImageKey)
                     filter.setValue(CIVector(cgPoint: filterCenter), forKey: "inputCenter")
-                    filter.setValue(f.bounds.width/2, forKey: "inputRadius")
-                    // could also manipulate the radius of the filter based on face size!
+                    filter.setValue(f.bounds.width*2/3, forKey: "inputRadius")
                     retImage = filter.outputImage!
                 
             }
