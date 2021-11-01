@@ -21,8 +21,8 @@ class ViewController: UIViewController   {
     var manyFaces = false
     var leftEyeBlink = false
     var rightEyeBlink = false
-    var leftEyeClose = false
-    var righteyeClose = false
+    var leftEyeClosed = false
+    var rightEyeClosed = false
     
     var videoManager:VideoAnalgesic! = nil
     let bridge = OpenCVBridge()
@@ -122,8 +122,9 @@ class ViewController: UIViewController   {
                         retImage = mouthFilter.outputImage!
                     }
                 }
-                
+                // if there is only one face
                 if !manyFaces {
+                    // if detect smile
                     if f.hasSmile{
                         DispatchQueue.main.async{
                             self.smileLabel.text = "Smiling!"
@@ -133,22 +134,48 @@ class ViewController: UIViewController   {
                             self.smileLabel.text = "Not smiling!"
                         }
                     }
+                    
+                    if f.leftEyeClosed{
+                        leftEyeClosed = true
+                    }else {
+                        if leftEyeClosed == true{
+                            leftEyeBlink = true
+                            leftEyeClosed = false
+                        }
+                    }
+                    
+                    if f.rightEyeClosed{
+                        rightEyeClosed = true
+                    }else{
+                        if rightEyeClosed == true{
+                            rightEyeBlink = true
+                            rightEyeClosed = false
+                        }
+                    }
+                    
                 }else{
                     DispatchQueue.main.async{
                         self.smileLabel.text = ""
                     }
                 }
                 
-                if !manyFaces{
-                    if f.leftEyeClosed{
-                        
-                    }
-                    
-                }else{
+                if leftEyeBlink == true && rightEyeBlink == true{
                     DispatchQueue.main.async{
-                        self.eyeLabel.text = ""
+                        self.eyeLabel.text = "both eye blink"
+                    }
+                }else if leftEyeBlink == true && rightEyeBlink == false{
+                    DispatchQueue.main.async{
+                        self.eyeLabel.text = "left eye blink"
+                    }
+                }else if leftEyeBlink == false && rightEyeBlink == true{
+                    DispatchQueue.main.async{
+                        self.eyeLabel.text = "right eye blink"
                     }
                 }
+                
+                leftEyeBlink = false
+                rightEyeBlink = false
+                
                 
             }
             return retImage
