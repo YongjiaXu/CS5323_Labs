@@ -18,7 +18,6 @@
 		B67B72BF1D99D0AD008EDDE1 /* nose.xml in Resources */ = {isa = PBXBuildFile; fileRef = B67B72BE1D99D0AD008EDDE1 /* nose.xml */; };
 		B6E657991D95AA4500E75C60 /* VideoAnalgesic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E657981D95AA4500E75C60 /* VideoAnalgesic.swift */; };
 		C24407AD272B7D1000A89FC2 /* ModuleBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24407AC272B7D1000A89FC2 /* ModuleBViewController.swift */; };
-		C285E2B327308E1F0060A0B2 /* FFTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C285E2B127308E1F0060A0B2 /* FFTHelper.m */; };
 		C285E2B527308E2C0060A0B2 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = C285E2B427308E2C0060A0B2 /* Shaders.metal */; };
 		C285E2B727308E340060A0B2 /* MetalGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = C285E2B627308E340060A0B2 /* MetalGraph.swift */; };
 /* End PBXBuildFile section */
@@ -40,8 +39,6 @@
 		B6E657981D95AA4500E75C60 /* VideoAnalgesic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoAnalgesic.swift; path = ImageDSPUtils/VideoAnalgesic.swift; sourceTree = SOURCE_ROOT; };
 		B6EF2FD91F7A906A00C33387 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		C24407AC272B7D1000A89FC2 /* ModuleBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBViewController.swift; sourceTree = "<group>"; };
-		C285E2B127308E1F0060A0B2 /* FFTHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFTHelper.m; path = ../../AudioLabSwift/AudioDSPUtils/FFTHelper.m; sourceTree = "<group>"; };
-		C285E2B227308E1F0060A0B2 /* FFTHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFTHelper.h; path = ../../AudioLabSwift/AudioDSPUtils/FFTHelper.h; sourceTree = "<group>"; };
 		C285E2B427308E2C0060A0B2 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = Shaders.metal; path = ../AudioLabSwift/Shaders.metal; sourceTree = "<group>"; };
 		C285E2B627308E340060A0B2 /* MetalGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetalGraph.swift; path = ../../AudioLabSwift/AudioLabSwift/MetalGraph.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,8 +98,6 @@
 				B6E657981D95AA4500E75C60 /* VideoAnalgesic.swift */,
 				B67B72B91D996ADE008EDDE1 /* OpenCVBridge.hh */,
 				B67B72BA1D996ADE008EDDE1 /* OpenCVBridge.mm */,
-				C285E2B227308E1F0060A0B2 /* FFTHelper.h */,
-				C285E2B127308E1F0060A0B2 /* FFTHelper.m */,
 				B67B72B81D996ADC008EDDE1 /* ImageLab-Bridging-Header.h */,
 			);
 			name = ImageDSPUtils;
@@ -189,7 +184,6 @@
 				B6E657991D95AA4500E75C60 /* VideoAnalgesic.swift in Sources */,
 				C285E2B527308E2C0060A0B2 /* Shaders.metal in Sources */,
 				B650B31D1D8340F0000114A1 /* ViewController.swift in Sources */,
-				C285E2B327308E1F0060A0B2 /* FFTHelper.m in Sources */,
 				C24407AD272B7D1000A89FC2 /* ModuleBViewController.swift in Sources */,
 				B650B31B1D8340F0000114A1 /* AppDelegate.swift in Sources */,
 				B67B72BB1D996ADE008EDDE1 /* OpenCVBridge.mm in Sources */,

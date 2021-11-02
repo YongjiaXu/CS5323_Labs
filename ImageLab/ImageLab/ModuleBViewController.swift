@@ -35,6 +35,8 @@ class ModuleBViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // initialize labels and arrange styling
         heartRateLabel.text = "Heart rate = calculating..."
         heartRateLabel.layer.masksToBounds = true
         heartRateLabel.layer.cornerRadius = 7
@@ -46,6 +48,17 @@ class ModuleBViewController: UIViewController {
         toggleTorch.layer.masksToBounds = true
         toggleTorch.layer.cornerRadius = 7
 
+        // add graph for heart rate
+        graph?.addGraph(withName: "heartRate",
+                        shouldNormalize: true,
+                        numPointsInGraph: self.needRedBufferSize)
+        
+        Timer.scheduledTimer(timeInterval: 0.01, target: self,
+            selector: #selector(self.updateGraph),
+            userInfo: nil,
+            repeats: true)
+        
+        // start videoing
         self.videoManager = VideoAnalgesic(mainView: self.view)
         self.videoManager.setCameraPosition(position: AVCaptureDevice.Position.back)
         self.videoManager.setFPS(desiredFrameRate: self.frameRate) // set the frame rate so that we can calculate heart rate easier
@@ -56,9 +69,6 @@ class ModuleBViewController: UIViewController {
             videoManager.start()
         }
         
-        graph?.addGraph(withName: "heartRate",
-                        shouldNormalize: true,
-                        numPointsInGraph: self.needRedBufferSize)
     }
     
     
@@ -118,17 +128,21 @@ class ModuleBViewController: UIViewController {
                 
                 // take average of heartRate detected in a row
                 var finalHeartRate = (heartRateArr.reduce(0,+))/Float(10)
-                if !finalHeartRate.isNaN && !finalHeartRate.isInfinite {
+                if !finalHeartRate.isNaN && !finalHeartRate.isInfinite && finalHeartRate != 0 {
                     DispatchQueue.main.async {
                         self.heartRateLabel.text = ("Heart rate = \(Int(finalHeartRate)) BPM")
+                    }
+                }
+                else if finalHeartRate == 0 {
+                    DispatchQueue.main.async {
+                        self.heartRateLabel.text = ("Heart rate = calculating...")
+                        self.fingerLabel.text = "Please don't press too hard"
                     }
                 }
                 else {
                     finalHeartRate = 0
                 }
-                
                 self.redBuffer = Array(self.redBuffer[1...])
-                self.updateGraph()
             }
             
         }
@@ -145,7 +159,7 @@ class ModuleBViewController: UIViewController {
     @objc
     func updateGraph(){
         self.graph?.updateGraph(
-            data: self.redBuffer,
+            data: self.redBuffer.map({$0*10-2450}), // magnify and rearrange the position shown on graph
             forKey: "heartRate"
         )
     }
