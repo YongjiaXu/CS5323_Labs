@@ -45,7 +45,7 @@ class ModuleBViewController: UIViewController {
         
         toggleTorch.layer.masksToBounds = true
         toggleTorch.layer.cornerRadius = 7
-        // Do any additional setup after loading the view.
+
         self.videoManager = VideoAnalgesic(mainView: self.view)
         self.videoManager.setCameraPosition(position: AVCaptureDevice.Position.back)
         self.videoManager.setFPS(desiredFrameRate: self.frameRate) // set the frame rate so that we can calculate heart rate easier
@@ -75,16 +75,6 @@ class ModuleBViewController: UIViewController {
                              andContext: self.videoManager.getCIContext())
         let gotfinger = self.bridge.processFinger()
         retImage = self.bridge.getImageComposite()
-//        if gotfinger {
-//            DispatchQueue.main.async{
-//                self.heartRateLabel.text = "finger detected"
-//            }
-//        }
-//        else {
-//            DispatchQueue.main.async{
-//                self.heartRateLabel.text = "finger removed"
-//            }
-//        }
         if gotfinger {
             DispatchQueue.main.async {
                 self.fingerLabel.text = ("Finger Detected")
@@ -114,6 +104,7 @@ class ModuleBViewController: UIViewController {
                     }
                 }
                 
+                // calculate heartRate
                 let time = Float(self.needRedBufferSize)/Float(self.frameRate)
                 let heartRate = (Float(peaks)/time)*60
                 
@@ -125,6 +116,7 @@ class ModuleBViewController: UIViewController {
                     }
                 }
                 
+                // take average of heartRate detected in a row
                 var finalHeartRate = (heartRateArr.reduce(0,+))/Float(10)
                 if !finalHeartRate.isNaN && !finalHeartRate.isInfinite {
                     DispatchQueue.main.async {
@@ -147,20 +139,11 @@ class ModuleBViewController: UIViewController {
             }
         }
         
-        
-//        self.bridge.setTransforms(self.videoManager.transform)
-
-//        self.bridge.processImage()
-//        retImage = self.bridge.getImageComposite()
-        
-        
-        
         return retImage
     }
     
     @objc
     func updateGraph(){
-        
         self.graph?.updateGraph(
             data: self.redBuffer,
             forKey: "heartRate"
