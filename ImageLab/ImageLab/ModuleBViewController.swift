@@ -109,7 +109,7 @@ class ModuleBViewController: UIViewController {
                 let heartRate = (Float(peaks)/time)*60
                 
                 // filter unreasonable heartRate
-                if (heartRate > 40 && heartRate < 200) {
+                if (heartRate > 45 && heartRate < 240) {
                     heartRateArr.append(heartRate)
                     if (heartRateArr.count > 10) {
                         heartRateArr.removeFirst(1)
