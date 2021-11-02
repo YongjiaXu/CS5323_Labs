@@ -16,6 +16,10 @@ class ViewController: UIViewController   {
     var mouthFilter : CIFilter! = nil //filter for mouth
     var eyeFilter : CIFilter! = nil //filter for eye
     
+    @IBOutlet weak var eyeAndMouthLabel: UILabel!
+    @IBOutlet weak var eyeAndMouthSwitch: UISwitch!
+    @IBOutlet weak var faceDetectionLabel: UILabel!
+    @IBOutlet weak var faceDetectionSwitch: UISwitch!
     var faceDetection = true //face detection on as default
     var eyeMouthDetection = false //eye&mouth detection off as default
     var manyFaces = false
@@ -47,6 +51,12 @@ class ViewController: UIViewController   {
     //MARK: ViewController Hierarchy
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.bringSubviewToFront(self.smileLabel)
+        self.view.bringSubviewToFront(self.eyeLabel)
+        self.view.bringSubviewToFront(self.eyeAndMouthLabel)
+        self.view.bringSubviewToFront(self.faceDetectionLabel)
+        self.view.bringSubviewToFront(self.faceDetectionSwitch)
+        self.view.bringSubviewToFront(self.eyeAndMouthSwitch)
         togglecamera.layer.masksToBounds = true
         togglecamera.layer.cornerRadius = 7
         self.setupFilters()
