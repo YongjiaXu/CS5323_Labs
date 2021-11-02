@@ -13,8 +13,8 @@ class ViewController: UIViewController   {
 
     //MARK: Class Properties
     var filter : CIFilter! = nil //filter for face and eyes
-    var mouthFilter : CIFilter! = nil//filter for mouth
-    var eyeFilter : CIFilter! = nil//filter for eye
+    var mouthFilter : CIFilter! = nil //filter for mouth
+    var eyeFilter : CIFilter! = nil //filter for eye
     
     var faceDetection = true //face detection on as default
     var eyeMouthDetection = false //eye&mouth detection off as default
@@ -140,15 +140,17 @@ class ViewController: UIViewController   {
                         }
                     }
                     
+                    
                     if f.leftEyeClosed{
                         leftEyeClosed = true
                     }else {
                         if leftEyeClosed == true{
                             leftEyeBlink = true
                             leftEyeClosed = false
+
                         }
                     }
-                    
+
                     if f.rightEyeClosed{
                         rightEyeClosed = true
                     }else{
@@ -156,7 +158,30 @@ class ViewController: UIViewController   {
                             rightEyeBlink = true
                             rightEyeClosed = false
                         }
+                        
                     }
+                    
+                    
+                    
+                    if leftEyeBlink == true && rightEyeBlink == false{
+                        DispatchQueue.main.async{
+                            self.eyeLabel.text = "left eye blink"
+                        }
+                    }else if leftEyeBlink == false && rightEyeBlink == true{
+                        DispatchQueue.main.async{
+                            self.eyeLabel.text = "right eye blink"
+                        }
+                    }else if leftEyeBlink == true && rightEyeBlink == true{
+                        DispatchQueue.main.async{
+                            self.eyeLabel.text = "both eyes blink"
+                        }
+                    }
+                    
+                    
+                    
+
+                    leftEyeBlink = false
+                    rightEyeBlink = false
                     
                 }else{
                     DispatchQueue.main.async{
@@ -164,22 +189,7 @@ class ViewController: UIViewController   {
                     }
                 }
                 
-                if leftEyeBlink == true && rightEyeBlink == true{
-                    DispatchQueue.main.async{
-                        self.eyeLabel.text = "both eye blink"
-                    }
-                }else if leftEyeBlink == true && rightEyeBlink == false{
-                    DispatchQueue.main.async{
-                        self.eyeLabel.text = "left eye blink"
-                    }
-                }else if leftEyeBlink == false && rightEyeBlink == true{
-                    DispatchQueue.main.async{
-                        self.eyeLabel.text = "right eye blink"
-                    }
-                }
-                
-                leftEyeBlink = false
-                rightEyeBlink = false
+               
                 
                 
             }
