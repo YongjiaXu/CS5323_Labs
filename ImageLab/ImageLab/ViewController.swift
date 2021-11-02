@@ -47,7 +47,8 @@ class ViewController: UIViewController   {
     //MARK: ViewController Hierarchy
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        togglecamera.layer.masksToBounds = true
+        togglecamera.layer.cornerRadius = 7
         self.setupFilters()
 
         // setup the OpenCV bridge nose detector, from file
@@ -61,6 +62,10 @@ class ViewController: UIViewController   {
             videoManager.start()
         }
     
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.videoManager = nil
     }
     
     //MARK: Setup filtering

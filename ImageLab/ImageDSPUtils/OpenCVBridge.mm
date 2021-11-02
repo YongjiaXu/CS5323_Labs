@@ -430,11 +430,11 @@ using namespace cv;
     avgPixelIntensity = cv::mean( image_copy );     // Find the average color matrix
     
     
-    sprintf(text,"Avg. B: %.0f, G: %.0f, R: %.0f", avgPixelIntensity.val[0],avgPixelIntensity.val[1],avgPixelIntensity.val[2]);
+//    sprintf(text,"Avg. B: %.0f, G: %.0f, R: %.0f", avgPixelIntensity.val[0],avgPixelIntensity.val[1],avgPixelIntensity.val[2]);
     
     
     cv::putText(_image, text, cv::Point(0, 10), FONT_HERSHEY_PLAIN, 0.75, Scalar::all(255), 1, 2);
-    
+
     if(avgPixelIntensity.val[2] >200){      // If the red is over 200
         
         if(counter < 100){
@@ -443,15 +443,28 @@ using namespace cv;
             recordframes[2][counter] = avgPixelIntensity.val[2]; // Add that intensity to a container
             counter++;  // Increment the counter
         }
-        else{       // If it reaches 100, print sth to the image.
-            cv::putText(_image,"Reach 100 frames",cv::Point(50,50),FONT_HERSHEY_PLAIN,0.75,Scalar::all(255),2);
-        }
+//        else{       // If it reaches 100, print sth to the image.
+//            cv::putText(_image,"Reach 100 frames",cv::Point(50,50),FONT_HERSHEY_PLAIN,0.75,Scalar::all(255),2);
+//        }
         return true;
     }
-    if(counter>=100){
-        cv::putText(_image,"Reach 100 frames",cv::Point(50,50),FONT_HERSHEY_PLAIN,0.75,Scalar::all(255),2);
-    }
+//    if(counter>=100){
+//        cv::putText(_image,"Reach 100 frames",cv::Point(50,50),FONT_HERSHEY_PLAIN,0.75,Scalar::all(255),2);
+//    }
     return false;
+}
+
+-(int*) getColorChannels{
+    cv::Mat image_copy;
+    Scalar avgPixelIntensity;
+    
+    cvtColor(_image, image_copy, CV_BGRA2RGB); // From GBRA to RGB
+    avgPixelIntensity = cv::mean( image_copy );     // Find the average color matrix
+    static int channels[3];
+    channels[0] = avgPixelIntensity.val[0]; // Blue
+    channels[1] = avgPixelIntensity.val[1]; // Green
+    channels[2] = avgPixelIntensity.val[2]; // Red
+    return channels;
 }
 
 @end

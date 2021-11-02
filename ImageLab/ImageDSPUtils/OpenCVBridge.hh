@@ -42,4 +42,5 @@ int recordframes[3][100];       // A container to store those frames.
 
 -(bool)processFinger;           // Created a function called process Finger
 
+-(int*)getColorChannels;
 @end
