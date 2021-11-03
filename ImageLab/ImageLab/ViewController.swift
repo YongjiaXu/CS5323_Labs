@@ -186,6 +186,11 @@ class ViewController: UIViewController   {
                             self.eyeLabel.text = "both eyes blink"
                         }
                     }
+                    else {
+                        DispatchQueue.main.async{
+                            self.eyeLabel.text = "not blinking"
+                        }
+                    }
                     
                     
                     
@@ -195,7 +200,7 @@ class ViewController: UIViewController   {
                     
                 }else{
                     DispatchQueue.main.async{
-                        self.smileLabel.text = ""
+                        self.smileLabel.text = "Smile or not"
                     }
                 }
                 
