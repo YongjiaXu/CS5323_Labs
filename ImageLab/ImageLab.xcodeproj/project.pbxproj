@@ -20,6 +20,7 @@
 		C24407AD272B7D1000A89FC2 /* ModuleBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24407AC272B7D1000A89FC2 /* ModuleBViewController.swift */; };
 		C285E2B527308E2C0060A0B2 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = C285E2B427308E2C0060A0B2 /* Shaders.metal */; };
 		C285E2B727308E340060A0B2 /* MetalGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = C285E2B627308E340060A0B2 /* MetalGraph.swift */; };
+		CC80185227320D7E00FD8BC3 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC80185127320D7E00FD8BC3 /* TableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		C24407AC272B7D1000A89FC2 /* ModuleBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBViewController.swift; sourceTree = "<group>"; };
 		C285E2B427308E2C0060A0B2 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = Shaders.metal; path = ../AudioLabSwift/Shaders.metal; sourceTree = "<group>"; };
 		C285E2B627308E340060A0B2 /* MetalGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetalGraph.swift; path = ../../AudioLabSwift/AudioLabSwift/MetalGraph.swift; sourceTree = "<group>"; };
+		CC80185127320D7E00FD8BC3 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				B650B31A1D8340F0000114A1 /* AppDelegate.swift */,
 				B650B31C1D8340F0000114A1 /* ViewController.swift */,
 				B650B31E1D8340F0000114A1 /* Main.storyboard */,
+				CC80185127320D7E00FD8BC3 /* TableViewController.swift */,
 				C285E2B627308E340060A0B2 /* MetalGraph.swift */,
 				C24407AC272B7D1000A89FC2 /* ModuleBViewController.swift */,
 				B650B3211D8340F0000114A1 /* Assets.xcassets */,
@@ -136,7 +139,7 @@
 				TargetAttributes = {
 					B650B3161D8340F0000114A1 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 4VABB3288A;
+						DevelopmentTeam = 4B43Y3PYRX;
 						LastSwiftMigration = 1200;
 					};
 				};
@@ -183,6 +186,7 @@
 				C285E2B727308E340060A0B2 /* MetalGraph.swift in Sources */,
 				B6E657991D95AA4500E75C60 /* VideoAnalgesic.swift in Sources */,
 				C285E2B527308E2C0060A0B2 /* Shaders.metal in Sources */,
+				CC80185227320D7E00FD8BC3 /* TableViewController.swift in Sources */,
 				B650B31D1D8340F0000114A1 /* ViewController.swift in Sources */,
 				C24407AD272B7D1000A89FC2 /* ModuleBViewController.swift in Sources */,
 				B650B31B1D8340F0000114A1 /* AppDelegate.swift in Sources */,
@@ -327,7 +331,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 4VABB3288A;
+				DEVELOPMENT_TEAM = 4B43Y3PYRX;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -337,7 +341,7 @@
 				INFOPLIST_FILE = ImageLab/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ImageLabJJ;
+				PRODUCT_BUNDLE_IDENTIFIER = ImageLabFinal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ImageLab/ImageLab-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -350,7 +354,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 4VABB3288A;
+				DEVELOPMENT_TEAM = 4B43Y3PYRX;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -360,7 +364,7 @@
 				INFOPLIST_FILE = ImageLab/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ImageLabJJ;
+				PRODUCT_BUNDLE_IDENTIFIER = ImageLabFinal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ImageLab/ImageLab-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
