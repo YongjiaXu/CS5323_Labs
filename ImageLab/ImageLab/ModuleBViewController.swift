@@ -85,6 +85,8 @@ class ModuleBViewController: UIViewController {
                              andContext: self.videoManager.getCIContext())
         let gotfinger = self.bridge.processFinger()
         retImage = self.bridge.getImageComposite()
+        
+        // check if the finger is covering the camera
         if gotfinger {
             DispatchQueue.main.async {
                 self.fingerLabel.text = ("Finger Detected")
@@ -121,12 +123,13 @@ class ModuleBViewController: UIViewController {
                 // filter unreasonable heartRate
                 if (heartRate > 45 && heartRate < 240) {
                     heartRateArr.append(heartRate)
+                    // we would like to update the heartRate as frame grows
                     if (heartRateArr.count > 10) {
                         heartRateArr.removeFirst(1)
                     }
                 }
                 
-                // take average of heartRate detected in a row
+                // take average of heartRate detected in a row(10 entries)
                 var finalHeartRate = (heartRateArr.reduce(0,+))/Float(10)
                 if !finalHeartRate.isNaN && !finalHeartRate.isInfinite && finalHeartRate != 0 {
                     DispatchQueue.main.async {
@@ -142,6 +145,7 @@ class ModuleBViewController: UIViewController {
                 else {
                     finalHeartRate = 0
                 }
+                //move the buffer forward to allow next frame
                 self.redBuffer = Array(self.redBuffer[1...])
             }
             
