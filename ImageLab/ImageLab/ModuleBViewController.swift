@@ -158,8 +158,9 @@ class ModuleBViewController: UIViewController {
     
     @objc
     func updateGraph(){
+        print(self.redBuffer.map({$0*9-2200}))
         self.graph?.updateGraph(
-            data: self.redBuffer.map({$0*10-2450}), // magnify and rearrange the position shown on graph
+            data: self.redBuffer.map({$0*9-2210}), // magnify and rearrange the position shown on graph
             forKey: "heartRate"
         )
     }
