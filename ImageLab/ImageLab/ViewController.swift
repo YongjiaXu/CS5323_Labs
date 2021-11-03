@@ -22,7 +22,7 @@ class ViewController: UIViewController   {
     @IBOutlet weak var faceDetectionSwitch: UISwitch!
     var faceDetection = true //face detection on as default
     var eyeMouthDetection = false //eye&mouth detection off as default
-    var manyFaces = false
+    var manyFaces = false // set manyFaces to true if there are two or more faces
     var leftEyeBlink = false
     var rightEyeBlink = false
     var leftEyeClosed = false
@@ -59,6 +59,7 @@ class ViewController: UIViewController   {
         self.view.bringSubviewToFront(self.eyeAndMouthSwitch)
         togglecamera.layer.masksToBounds = true
         togglecamera.layer.cornerRadius = 7
+        
         self.setupFilters()
 
         // setup the OpenCV bridge nose detector, from file
@@ -154,6 +155,8 @@ class ViewController: UIViewController   {
                     if f.leftEyeClosed{
                         leftEyeClosed = true
                     }else {
+                        // if left eye is open, but leftEyeClosed == true(last left eye status was closed), set leftEyeBlink to true to show left eye blink
+
                         if leftEyeClosed == true{
                             leftEyeBlink = true
                             leftEyeClosed = false
@@ -164,6 +167,7 @@ class ViewController: UIViewController   {
                     if f.rightEyeClosed{
                         rightEyeClosed = true
                     }else{
+                        // if right eye is open, but rightEyeClosed == true(last right eye status was closed), set rightEyeBlink to true to show right eye blink
                         if rightEyeClosed == true{
                             rightEyeBlink = true
                             rightEyeClosed = false
@@ -172,29 +176,22 @@ class ViewController: UIViewController   {
                     }
                     
                     
-                    
+                    // left eye blink
                     if leftEyeBlink == true && rightEyeBlink == false{
                         DispatchQueue.main.async{
                             self.eyeLabel.text = "left eye blink"
                         }
-                    }else if leftEyeBlink == false && rightEyeBlink == true{
+                    }else if leftEyeBlink == false && rightEyeBlink == true{ // right eye blink
                         DispatchQueue.main.async{
                             self.eyeLabel.text = "right eye blink"
                         }
-                    }else if leftEyeBlink == true && rightEyeBlink == true{
+                    }else if leftEyeBlink == true && rightEyeBlink == true{ // both eyes blink
                         DispatchQueue.main.async{
                             self.eyeLabel.text = "both eyes blink"
                         }
                     }
-                    else {
-                        DispatchQueue.main.async{
-                            self.eyeLabel.text = "not blinking"
-                        }
-                    }
                     
-                    
-                    
-
+                    //reset blink to false
                     leftEyeBlink = false
                     rightEyeBlink = false
                     
@@ -220,10 +217,10 @@ class ViewController: UIViewController   {
                 // if no faces, just return original image
                 if faces.count == 0 {
                     return inputImage
-                }else if faces.count == 1{
+                }else if faces.count == 1{ // if there is one face set manyFaces to false
                     manyFaces = false
                 }else{
-                    manyFaces = true
+                    manyFaces = true // if there are two or more faces, set it to true
                 }
         
                 //otherwise apply the filters to the faces
