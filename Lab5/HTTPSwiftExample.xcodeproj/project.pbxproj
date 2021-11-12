@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A323FDEB273F0E6B00AF1283 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A323FDEA273F0E6B00AF1283 /* opencv2.framework */; };
+		A323FDF1273F0EFD00AF1283 /* OpenCVBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = A323FDEE273F0EFD00AF1283 /* OpenCVBridge.mm */; };
+		A323FDF2273F0EFD00AF1283 /* VideoAnalgesic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323FDF0273F0EFD00AF1283 /* VideoAnalgesic.swift */; };
 		B67483DB1ACA2D6800A9970E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67483DA1ACA2D6800A9970E /* AppDelegate.swift */; };
 		B67483DD1ACA2D6800A9970E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67483DC1ACA2D6800A9970E /* ViewController.swift */; };
 		B67483E01ACA2D6800A9970E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B67483DE1ACA2D6800A9970E /* Main.storyboard */; };
@@ -17,6 +20,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A323FDE7273F094000AF1283 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = ../../ImageLab/ImageLab/PrefixHeader.pch; sourceTree = "<group>"; };
+		A323FDEA273F0E6B00AF1283 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ImageDSPUtils/opencv2.framework; sourceTree = "<group>"; };
+		A323FDEC273F0EFC00AF1283 /* HTTPSwiftExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HTTPSwiftExample-Bridging-Header.h"; sourceTree = "<group>"; };
+		A323FDEE273F0EFD00AF1283 /* OpenCVBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = OpenCVBridge.mm; path = ImageDSPUtils/OpenCVBridge.mm; sourceTree = SOURCE_ROOT; };
+		A323FDEF273F0EFD00AF1283 /* OpenCVBridge.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = OpenCVBridge.hh; path = ImageDSPUtils/OpenCVBridge.hh; sourceTree = SOURCE_ROOT; };
+		A323FDF0273F0EFD00AF1283 /* VideoAnalgesic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoAnalgesic.swift; path = ImageDSPUtils/VideoAnalgesic.swift; sourceTree = SOURCE_ROOT; };
 		B67483D51ACA2D6800A9970E /* HTTPSwiftExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HTTPSwiftExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B67483D91ACA2D6800A9970E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B67483DA1ACA2D6800A9970E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -33,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A323FDEB273F0E6B00AF1283 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +52,7 @@
 		B67483CC1ACA2D6800A9970E = {
 			isa = PBXGroup;
 			children = (
+				A323FDEA273F0E6B00AF1283 /* opencv2.framework */,
 				B67483D71ACA2D6800A9970E /* HTTPSwiftExample */,
 				B67483D61ACA2D6800A9970E /* Products */,
 			);
@@ -58,7 +69,11 @@
 		B67483D71ACA2D6800A9970E /* HTTPSwiftExample */ = {
 			isa = PBXGroup;
 			children = (
+				A323FDEF273F0EFD00AF1283 /* OpenCVBridge.hh */,
+				A323FDEE273F0EFD00AF1283 /* OpenCVBridge.mm */,
+				A323FDF0273F0EFD00AF1283 /* VideoAnalgesic.swift */,
 				B67483DA1ACA2D6800A9970E /* AppDelegate.swift */,
+				A323FDE7273F094000AF1283 /* PrefixHeader.pch */,
 				B67483DC1ACA2D6800A9970E /* ViewController.swift */,
 				B694B0191FA377E4009A4277 /* RingBuffer.swift */,
 				B67483DE1ACA2D6800A9970E /* Main.storyboard */,
@@ -66,6 +81,7 @@
 				B67483E11ACA2D6800A9970E /* Images.xcassets */,
 				B67483E31ACA2D6800A9970E /* LaunchScreen.xib */,
 				B67483D81ACA2D6800A9970E /* Supporting Files */,
+				A323FDEC273F0EFC00AF1283 /* HTTPSwiftExample-Bridging-Header.h */,
 			);
 			path = HTTPSwiftExample;
 			sourceTree = "<group>";
@@ -110,7 +126,7 @@
 					B67483D41ACA2D6800A9970E = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = 8Q3MAQ3CMN;
-						LastSwiftMigration = 1310;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -154,7 +170,9 @@
 				B67483DD1ACA2D6800A9970E /* ViewController.swift in Sources */,
 				B67483DB1ACA2D6800A9970E /* AppDelegate.swift in Sources */,
 				B694B01A1FA377E4009A4277 /* RingBuffer.swift in Sources */,
+				A323FDF2273F0EFD00AF1283 /* VideoAnalgesic.swift in Sources */,
 				C28EC98F273CA06900350A35 /* PickerTextField.swift in Sources */,
+				A323FDF1273F0EFD00AF1283 /* OpenCVBridge.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,12 +309,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 8Q3MAQ3CMN;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ImageDSPUtils",
+				);
 				INFOPLIST_FILE = HTTPSwiftExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = SMU.HTTPSwiftExampleBX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "HTTPSwiftExample/HTTPSwiftExample-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -308,12 +330,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 8Q3MAQ3CMN;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ImageDSPUtils",
+				);
 				INFOPLIST_FILE = HTTPSwiftExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = SMU.HTTPSwiftExampleBX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "HTTPSwiftExample/HTTPSwiftExample-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

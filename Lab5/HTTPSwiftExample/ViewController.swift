@@ -18,6 +18,7 @@
 let SERVER_URL = "http://10.9.165.78:8000" // change this for your server name!!!
 
 import UIKit
+import AVFoundation
 import CoreMotion
 // pop up button : https://www.youtube.com/watch?v=VzT15es8bjM
 
@@ -39,6 +40,9 @@ class ViewController: UIViewController, URLSessionDelegate {
     let operationQueue = OperationQueue()
     let motionOperationQueue = OperationQueue()
     let calibrationOperationQueue = OperationQueue()
+    let bridge = OpenCVBridge()
+    
+    
     
     var ringBuffer = RingBuffer()
     let animation = CATransition()
@@ -111,6 +115,15 @@ class ViewController: UIViewController, URLSessionDelegate {
         expTextView.inputView = pickerView
         
     }
+    
+    //MARK: Process image output
+        func processImageSwift(inputImage:CIImage) -> CIImage{
+
+            var retImage = inputImage
+            
+            return retImage
+        }
+    
 
     //MARK: Get New Dataset ID
     
