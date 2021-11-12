@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZvJ-Tq-UXw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZvJ-Tq-UXw">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -70,7 +70,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="READY TO EAT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CPo-tK-dde">
-                                <rect key="frame" x="123" y="224" width="167" height="28"/>
+                                <rect key="frame" x="123.5" y="224" width="167" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="6G9-IX-zRC"/>
                                     <constraint firstAttribute="width" constant="167" id="SMD-IQ-9sP"/>
@@ -137,7 +137,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="MUE-dK-SUR">
-                            <rect key="frame" x="0.0" y="191.5" width="414" height="67"/>
+                            <rect key="frame" x="0.0" y="202.5" width="414" height="67"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="1" green="0.41547456890000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -150,7 +150,7 @@
                         </button>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FoodNameCell" id="s6q-W8-SaG">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="s6q-W8-SaG" id="eaI-I9-reP">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -161,7 +161,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CollectiveCell" textLabel="rSD-bd-IUV" detailTextLabel="qyQ-xJ-6Om" rowHeight="46" style="IBUITableViewCellStyleValue1" id="aZ4-x0-oMX">
-                                <rect key="frame" x="0.0" y="71.5" width="414" height="46"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aZ4-x0-oMX" id="RKQ-n1-RnD">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="46"/>
@@ -188,7 +188,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CaloriesCell" textLabel="GyE-6W-2jT" detailTextLabel="Ay2-XJ-h0C" rowHeight="46" style="IBUITableViewCellStyleValue1" id="qpf-05-R9e">
-                                <rect key="frame" x="0.0" y="117.5" width="414" height="46"/>
+                                <rect key="frame" x="0.0" y="134" width="414" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qpf-05-R9e" id="rLm-DI-v94">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="46"/>
@@ -743,21 +743,21 @@
                                 <exclude reference="cFx-Fx-5fm"/>
                                 <exclude reference="fL4-Qm-mUU"/>
                                 <exclude reference="i3z-DB-DCD"/>
-                                <exclude reference="6F4-pV-CCv"/>
-                                <exclude reference="QEd-An-04g"/>
-                                <exclude reference="rYJ-sP-aFR"/>
                                 <exclude reference="1Ak-0v-A08"/>
                                 <exclude reference="4Ie-JT-H4G"/>
                                 <exclude reference="WNi-FK-y4r"/>
                                 <exclude reference="y7X-Wo-3tw"/>
                                 <exclude reference="ylh-p0-omu"/>
+                                <exclude reference="6F4-pV-CCv"/>
+                                <exclude reference="QEd-An-04g"/>
+                                <exclude reference="rYJ-sP-aFR"/>
                                 <exclude reference="gGz-Hn-cwv"/>
                                 <exclude reference="k2N-8Q-v1y"/>
+                                <exclude reference="3TQ-iX-fEQ"/>
+                                <exclude reference="ITa-kb-mqI"/>
                                 <exclude reference="2Gj-sf-lIE"/>
                                 <exclude reference="TNP-yJ-gnZ"/>
                                 <exclude reference="mN4-iM-NRr"/>
-                                <exclude reference="3TQ-iX-fEQ"/>
-                                <exclude reference="ITa-kb-mqI"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
@@ -779,10 +779,6 @@
                                 <include reference="fL4-Qm-mUU"/>
                                 <exclude reference="i3z-DB-DCD"/>
                                 <exclude reference="nMx-Dc-u1x"/>
-                                <include reference="6F4-pV-CCv"/>
-                                <exclude reference="QEd-An-04g"/>
-                                <exclude reference="qiI-eX-YF7"/>
-                                <include reference="rYJ-sP-aFR"/>
                                 <exclude reference="1Ak-0v-A08"/>
                                 <exclude reference="1hx-aj-mLf"/>
                                 <include reference="4Ie-JT-H4G"/>
@@ -792,20 +788,24 @@
                                 <exclude reference="IQ1-02-OJb"/>
                                 <exclude reference="fpe-Xw-kTV"/>
                                 <include reference="ylh-p0-omu"/>
+                                <include reference="6F4-pV-CCv"/>
+                                <exclude reference="QEd-An-04g"/>
+                                <exclude reference="qiI-eX-YF7"/>
+                                <include reference="rYJ-sP-aFR"/>
                                 <include reference="gGz-Hn-cwv"/>
                                 <exclude reference="k2N-8Q-v1y"/>
                                 <exclude reference="ls8-8j-HnF"/>
                                 <exclude reference="ouj-xk-oHw"/>
+                                <include reference="3TQ-iX-fEQ"/>
+                                <include reference="ITa-kb-mqI"/>
+                                <exclude reference="jNG-vl-7Wo"/>
+                                <exclude reference="ARx-WF-gla"/>
                                 <include reference="2Gj-sf-lIE"/>
                                 <exclude reference="9i3-Jd-1IB"/>
                                 <include reference="TNP-yJ-gnZ"/>
                                 <exclude reference="ZQh-6J-Tx9"/>
                                 <exclude reference="jHb-VM-xvj"/>
                                 <include reference="mN4-iM-NRr"/>
-                                <exclude reference="ARx-WF-gla"/>
-                                <include reference="3TQ-iX-fEQ"/>
-                                <include reference="ITa-kb-mqI"/>
-                                <exclude reference="jNG-vl-7Wo"/>
                             </mask>
                         </variation>
                     </view>
