@@ -15,11 +15,12 @@
 //    ifconfig |grep inet   
 // to see what your public facing IP address is, the ip address can be used here
 //let SERVER_URL = "http://erics-macbook-pro.local:8000" // change this for your server name!!!
-let SERVER_URL = "http://10.9.165.78:8000" // change this for your server name!!!
+//let SERVER_URL = "http://10.9.165.78:8000" // change this for your server name!!!
 
 import UIKit
 import AVFoundation
 import CoreMotion
+import VideoToolbox
 // pop up button : https://www.youtube.com/watch?v=VzT15es8bjM
 
 class ViewController: UIViewController, URLSessionDelegate {
@@ -43,13 +44,14 @@ class ViewController: UIViewController, URLSessionDelegate {
     let bridge = OpenCVBridge()
     
     
-    
-    var ringBuffer = RingBuffer()
+    private let serverHandler = ServerHalder()
+//    var ringBuffer = RingBuffer()
     let animation = CATransition()
-    let motion = CMMotionManager()
+//    let motion = CMMotionManager()
     
-
-    @IBOutlet weak var imageVIew: UIImageView!
+    @IBOutlet weak var imageView: UIImageView!
+    
+    // -------- Take a picture --------
     @IBOutlet weak var takePictureButton: UIButton!
     @IBAction func takePictureOnClick(_ sender: Any) {
         let picker = UIImagePickerController()
@@ -62,11 +64,14 @@ class ViewController: UIViewController, URLSessionDelegate {
     @IBOutlet weak var expTextView: UITextField!
     let expressions = ["happy", "sad", "neutral", "disgust", "surprise", "angry", "fear"]
     var pickerView = UIPickerView()
-    var expToBeTrained = "" //default is happy
-    
-    
+    var expToBeTrained = ""
+    var modelSelected = ""
+
+    // -------- Add an image to database --------
     @IBOutlet weak var addImageButton: UIButton!
     @IBAction func addImage(_ sender: Any) {
+        let image : UIImage? = self.imageView.image
+        // sanity checks before addImage
         if (expToBeTrained == "") {
             // referenced: https://medium.com/design-and-tech-co/displaying-pop-ups-in-ios-applications-f550a66a5923
             let alert = UIAlertController(title: "Cannot Add Image", message: "Please select a label", preferredStyle: .alert)
@@ -74,30 +79,114 @@ class ViewController: UIViewController, URLSessionDelegate {
             alert.addAction(okayAction)
             present(alert, animated: true, completion: nil)
         }
+        else if (image == nil) {
+            let alert = UIAlertController(title: "Cannot Add Image", message: "Please take a picture", preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "Okay", style: .default)
+            alert.addAction(okayAction)
+            present(alert, animated: true, completion: nil)
+        }
         else {
             print(expToBeTrained)
-            // call backend to add the image
-            let ciImage = self.imageVIew.image!.ciImage
-            // get image array and send it to python server***
-            
+            let image = self.imageView.image!
+            let data = image.pixelData()
+            let dataArr = self.reshapeArray(arr: data!)
+            print(dataArr.count)
+            self.serverHandler.addImage(dataArr, label: expToBeTrained)
+            let alert = UIAlertController(title: "Add Image Successful!", message: "", preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "Okay", style: .default)
+            alert.addAction(okayAction)
+            present(alert, animated: true, completion: nil)
         }
     }
     
+    // -------- Function for training the model --------
     @IBOutlet weak var trainButton: UIButton!
     @IBAction func trainModel(_ sender: Any) {
         // !! this if statement needs to be changed to check if each label has an image uploaded
-        if (self.expToBeTrained == "") {
+        self.serverHandler.checkEnoughLabel()
+        let enoughData = self.serverHandler.enoughData
+        print(enoughData)
+        if (enoughData == false) {
             // sanity check if the features are missing for each label
             // can only train model if there is at least one image for each label
             // referenced: https://medium.com/design-and-tech-co/displaying-pop-ups-in-ios-applications-f550a66a5923
-            let alert = UIAlertController(title: "Cannot Train Model", message: "Missing features", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Cannot Train Model", message: "Missing labels, please upload at least one image for each label", preferredStyle: .alert)
             let okayAction = UIAlertAction(title: "Okay", style: .default)
             alert.addAction(okayAction)
             present(alert, animated: true, completion: nil)
         } else {
-            print(self.expToBeTrained)
+            self.serverHandler.trainModel()
+            let alert = UIAlertController(title: "Model Trained Successful!", message: "You can now take pictures and predict!", preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "Okay", style: .default)
+            alert.addAction(okayAction)
+            present(alert, animated: true, completion: nil)
         }
     }
+    
+    // -------- Function for training and comparing the models --------
+    
+    @IBOutlet weak var bdtAccLabel: UILabel!
+    @IBOutlet weak var lrAccLabel: UILabel!
+    @IBOutlet weak var trainAndCompareButton: UIButton!
+    @IBAction func trainAndCompareModels(_ sender: Any) {
+        self.serverHandler.checkEnoughLabelForCompare()
+        let enoughDataToCompare = self.serverHandler.enoughDataToCompare
+        print(enoughDataToCompare)
+        if (enoughDataToCompare == false) {
+            let alert = UIAlertController(title: "Cannot Train and Compare Model", message: "Comparing models need more images!", preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "Okay", style: .default)
+            alert.addAction(okayAction)
+            present(alert, animated: true, completion: nil)
+        } else {
+            self.serverHandler.trainAndCompareModel()
+            self.lrAccLabel.text = "Logistic Regression: \(self.serverHandler.lrAcc)"
+            self.bdtAccLabel.text = "Boosted Decision Tree: \(self.serverHandler.bdtAcc)"
+            let alert = UIAlertController(title: "Model Trained Successful!", message: "You can now take pictures and predict!", preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "Okay", style: .default)
+            alert.addAction(okayAction)
+            present(alert, animated: true, completion: nil)
+        }
+        
+    }
+    
+    // -------- Function for selecting model --------
+    @IBOutlet weak var modelSelector: UISegmentedControl!
+
+    @IBAction func selectModel(_ sender: Any) {
+        self.modelSelected = self.modelSelector.titleForSegment(at: self.modelSelector.selectedSegmentIndex)!
+    }
+    
+    // -------- Function for predicting --------
+    @IBOutlet weak var predictionLabel: UILabel!
+    @IBOutlet weak var predictButton: UIButton!
+    @IBAction func predictClicked(_ sender: Any) {
+        // check if image is available
+        let image : UIImage? = self.imageView.image
+        if (image == nil) {
+            let alert = UIAlertController(title: "Cannot Predict", message: "Please take a picture", preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "Okay", style: .default)
+            alert.addAction(okayAction)
+            present(alert, animated: true, completion: nil)
+        }
+        // check if the model is available
+        else {
+            let image = self.imageView.image!
+            let data = image.pixelData()
+            let dataArr = self.reshapeArray(arr: data!)
+            self.serverHandler.predict(image: dataArr, model: self.modelSelected)
+            let pred = self.serverHandler.resultLabel
+            if (pred == "None") {
+                // if the model does not exist, will return None form server, alert showing
+                let alert = UIAlertController(title: "Cannot Predict", message: "Please train the model first", preferredStyle: .alert)
+                let okayAction = UIAlertAction(title: "Okay", style: .default)
+                alert.addAction(okayAction)
+                present(alert, animated: true, completion: nil)
+            } else {
+                self.predictionLabel.text = "Prection: \(pred)"
+            }
+        }
+    }
+    
     
     // MARK: View Controller Life Cycle
     override func viewDidLoad() {
@@ -109,132 +198,40 @@ class ViewController: UIViewController, URLSessionDelegate {
         animation.type = CATransitionType.fade
         animation.duration = 0.5
         
-        imageVIew.backgroundColor = .secondarySystemBackground
+        imageView.backgroundColor = .secondarySystemBackground
         pickerView.delegate = self
         pickerView.dataSource = self
         expTextView.inputView = pickerView
+        self.modelSelected = "LR" // default to logistic regression
         
+        // style for buttons and labels
+        takePictureButton.layer.masksToBounds = true
+        takePictureButton.layer.cornerRadius = 4
     }
     
-    //MARK: Process image output
-        func processImageSwift(inputImage:CIImage) -> CIImage{
-
-            var retImage = inputImage
-            
-            return retImage
+    private func reshapeArray(arr: [UInt8]) -> [Float]{
+        var tmpArr:[Float] = []
+        var grayscaled:Float = 0
+        
+        // calculate the gray from RGB channels and append to a temporary array
+        for i in stride(from: 0, to: arr.count, by: 4){
+            grayscaled = 0.299*Float(arr[i]) + 0.587*Float(arr[i+1]) + 0.114*Float(arr[i+2])
+            tmpArr.append(grayscaled)
+            // skipping the alpha channel
         }
-    
-
-    //MARK: Get New Dataset ID
-    
-    
-    //MARK: Comm with Server
-//    func sendFeatures(_ array:[Double], withLabel label:CalibrationStage){
-//        let baseURL = "\(SERVER_URL)/AddDataPoint"
-//        let postUrl = URL(string: "\(baseURL)")
-//
-//        // create a custom HTTP POST request
-//        var request = URLRequest(url: postUrl!)
-//
-//        // data to send in body of post request (send arguments as json)
-//        let jsonUpload:NSDictionary = ["feature":array,
-//                                       "label":"\(label)",
-//                                       "dsid":self.dsid]
-//
-//
-//        let requestBody:Data? = self.convertDictionaryToData(with:jsonUpload)
-//
-//        request.httpMethod = "POST"
-//        request.httpBody = requestBody
-//
-//        let postTask : URLSessionDataTask = self.session.dataTask(with: request,
-//            completionHandler:{(data, response, error) in
-//                if(error != nil){
-//                    if let res = response{
-//                        print("Response:\n",res)
-//                    }
-//                }
-//                else{
-//                    let jsonDictionary = self.convertDataToDictionary(with: data)
-//
-//                    print(jsonDictionary["feature"]!)
-//                    print(jsonDictionary["label"]!)
-//                }
-//
-//        })
-//
-//        postTask.resume() // start the task
-//    }
-//
-//    func getPrediction(_ array:[Double]){
-//        let baseURL = "\(SERVER_URL)/PredictOne"
-//        let postUrl = URL(string: "\(baseURL)")
-//
-//        // create a custom HTTP POST request
-//        var request = URLRequest(url: postUrl!)
-//
-//        // data to send in body of post request (send arguments as json)
-//        let jsonUpload:NSDictionary = ["feature":array, "dsid":self.dsid]
-//
-//
-//        let requestBody:Data? = self.convertDictionaryToData(with:jsonUpload)
-//
-//        request.httpMethod = "POST"
-//        request.httpBody = requestBody
-//
-//        let postTask : URLSessionDataTask = self.session.dataTask(with: request,
-//                                                                  completionHandler:{
-//                        (data, response, error) in
-//                        if(error != nil){
-//                            if let res = response{
-//                                print("Response:\n",res)
-//                            }
-//                        }
-//                        else{ // no error we are aware of
-//                            let jsonDictionary = self.convertDataToDictionary(with: data)
-//
-//                            if let labelResponse = jsonDictionary["prediction"]{
-//                                print(labelResponse)
-//                                self.displayLabelResponse(labelResponse as! String)
-//                            }
-//                        }
-//
-//        })
-//
-//        postTask.resume() // start the task
-//    }
-//
-    
-
-    //MARK: JSON Conversion Functions
-//    func convertDictionaryToData(with jsonUpload:NSDictionary) -> Data?{
-//        do { // try to make JSON and deal with errors using do/catch block
-//            let requestBody = try JSONSerialization.data(withJSONObject: jsonUpload, options:JSONSerialization.WritingOptions.prettyPrinted)
-//            return requestBody
-//        } catch {
-//            print("json error: \(error.localizedDescription)")
-//            return nil
-//        }
-//    }
-//
-//    func convertDataToDictionary(with data:Data?)->NSDictionary{
-//        do { // try to parse JSON and deal with errors using do/catch block
-//            let jsonDictionary: NSDictionary =
-//                try JSONSerialization.jsonObject(with: data!,
-//                                              options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
-//
-//            return jsonDictionary
-//
-//        } catch {
-//
-//            if let strData = String(data:data!, encoding:String.Encoding(rawValue: String.Encoding.utf8.rawValue)){
-//                            print("printing JSON received as string: "+strData)
-//            }else{
-//                print("json error: \(error.localizedDescription)")
-//            }
-//            return NSDictionary() // just return empty
-//        }
-//    }
+        
+        // dimension reduction for the image, skipping some of the pixels
+        var retArr:[Float] = []
+        for i in stride(from: 0, to: 1242, by: 1) {
+            for j in stride(from: 0, to: 1242, by: 1){
+                if (i % 6 == 0 && j % 6 == 0) {
+                    retArr.append(tmpArr[j+i*1242])
+                }
+                else {continue}
+            }
+        }
+        return retArr
+    }
 
 }
 
@@ -249,7 +246,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
             return
         }
-        imageVIew.image = image
+        imageView.image = image
     }
 }
 
@@ -274,6 +271,24 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
 }
 
+//https://stackoverflow.com/questions/33768066/get-pixel-data-as-array-from-uiimage-cgimage-in-swift
+extension UIImage {
+    func pixelData() -> [UInt8]? {
+        let size = self.size
+        let dataSize = size.width * size.height * 4
+        var pixelData = [UInt8](repeating: 0, count: Int(dataSize))
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let context = CGContext(data: &pixelData,
+                                width: Int(size.width),
+                                height: Int(size.height),
+                                bitsPerComponent: 8,
+                                bytesPerRow: 4 * Int(size.width),
+                                space: colorSpace,
+                                bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
+        guard let cgImage = self.cgImage else { return nil }
+        context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
 
-
+        return pixelData
+    }
+ }
 

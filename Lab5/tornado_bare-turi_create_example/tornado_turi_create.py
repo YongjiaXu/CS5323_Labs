@@ -46,7 +46,12 @@ class Application(tornado.web.Application):
                     (r"/PostWithJson[/]?",    eh.JSONPostHandler),
                     (r"/MSLC[/]?",            eh.MSLC),  
                     # ------------------ for lab 5 ---------------
-                    (r"/addImage[/]?",        )           
+                    (r"/AddImage[/]?",        th.AddImage),  
+                    (r"/CheckEnoughData[/]?", th.CheckData),
+                    (r"/TrainModel[/]?",      th.TrainModel),
+                    (r"/Predict[/]?",         th.PredictLabel),
+                    (r"/ValidCompare[/]?",    th.ValidCompare),
+                    (r"/TrainAndCompareModel[/]?", th.TrainAndCompareModel)
                     ]
 
         self.handlers_string = str(handlers)

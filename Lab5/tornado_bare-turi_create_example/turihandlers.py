@@ -156,19 +156,152 @@ class PredictOneFromDatasetId(BaseHandler):
         return tc.SFrame(data=data)
 
 # ---------------- for lab 5 -----------------
+import cv2
+import os
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.decomposition import PCA
 
 class AddImage(BaseHandler):
     def post(self):
+        data = json.loads(self.request.body.decode("utf-8"))   
+        feature = data['feature']
+        label = data['label']
+        np_data = np.array(feature).reshape((207,207))
+        featureToStore = list(np_data.flatten())
+        self.db.images.insert({
+            'label': label,
+            'feature': featureToStore # store as a 1-d list
+        })
         
+# check if there is enough labeled features to train the model
+# in our case at least one image for each label(happy, sad, neutral, disgust, surprise, angry, fear)
+class CheckData(BaseHandler):
+    def get(self):
+        check_list = []
+        for i in self.db.images.find():
+            print(i['label'])
+            if i['label'] not in check_list:
+                check_list.append(i['label'])
+        if len(check_list) == 7:
+            self.write_json({'enough': True})
+        else: 
+            self.write_json({'enough': False})
 
+class TrainModel(BaseHandler):
+    def post(self):
+        train_data = self.getTrainData()
 
+        # logistic regression
+        lr_model = tc.logistic_classifier.create(train_data, target='target', verbose=0)
+        lr_yhat = lr_model.predict(train_data)
+        lr_acc = sum(lr_yhat == train_data['target'])/float(len(train_data))
 
+        # boosted decision tree
+        bdt_model = tc.boosted_trees_classifier.create(train_data, target='target', verbose=0)
+        bdt_yhat = bdt_model.predict(train_data)
+        bdt_acc = sum(bdt_yhat == train_data['target'])/float(len(train_data))
 
+        print('lr acc:', lr_acc)
+        print('bdt acc:', bdt_acc)
+        lr_model.save('../models/turi_model_%s' % ('lr_model'))
+        bdt_model.save('../models/turi_model_%s' % ('bdt_model'))
 
+    def getTrainData(self):
+        # convert data into sframe data
+        features=[]
+        labels=[]
+        for a in self.db.images.find():
+            features.append([float(val) for val in a['feature']])
+            labels.append(a['label'])
+        data = {'target':labels, 'sequence':np.array(features)}
+        return tc.SFrame(data=data)
 
+class PredictLabel(BaseHandler):
+    def post(self):
+        data = json.loads(self.request.body.decode("utf-8"))   
+        model_name = data['model']
+        feature = self.get_sframe_feature(data['feature'])
+        if model_name == 'LR':
+            try:
+                model_name = 'lr_model'
+            except Exception as e:
+                # return None if the model does not exist
+                self.write_json({'result': 'None'})
+                return
+        elif model_name == 'BDT':
+            try:
+                model_name = 'bdt_model'
+            except Exception as e:
+                # return None if the model does not exist
+                self.write_json({'result': 'None'})
+                return
+        print('{} making the prediction'.format(model_name))
+        model = tc.load_model('../models/turi_model_%s' % (model_name))
+        pred = model.predict(feature)
+        self.write_json({'result': pred[0]})
 
+    def get_sframe_feature(self, feature):
+        tmp = np.array(feature)
+        tmp = tmp.reshape((1, -1))
+        data = {'sequence': tmp}
+        return tc.SFrame(data=data)
 
+class ValidCompare(BaseHandler):
+    def get(self):
+        check_list = {}
+        for i in self.db.images.find():
+            print(i['label'])
+            if i['label'] not in check_list:
+                check_list[i['label']] = 1
+            else:
+                check_list[i['label']] += 1
+        if len(check_list) != 7:
+            self.write_json({'valid': False})
+            return
+        
+        for key in check_list:
+            if check_list[key] < 3:
+                self.write_json({'valid': False})
+                return
+        self.write_json({'valid': True})
 
+from sklearn.model_selection import train_test_split     
+# similar to train model but the comparing model requires more data and has test data set so that we could have a more reasonable accuracy to compare
+class TrainAndCompareModel(BaseHandler):
+    def post(self):
+        train_data, test_data = self.getTrainData()
 
+        # logistic regression
+        lr_model = tc.logistic_classifier.create(train_data, target='target', verbose=0)
+        lr_yhat = lr_model.predict(test_data)
+        lr_acc = sum(lr_yhat == test_data['target'])/float(len(test_data))
 
+        # boosted decision tree
+        bdt_model = tc.boosted_trees_classifier.create(train_data, target='target', verbose=0)
+        bdt_yhat = bdt_model.predict(test_data)
+        bdt_acc = sum(bdt_yhat == test_data['target'])/float(len(test_data))
 
+        print('lr acc:', lr_acc)
+        print('bdt acc:', bdt_acc)
+        lr_model.save('../models/turi_model_%s' % ('lr_model'))
+        bdt_model.save('../models/turi_model_%s' % ('bdt_model'))
+        lr_acc = '{:.2f}%'.format(lr_acc*100)
+        bdt_acc = '{:.2f}%'.format(bdt_acc*100)
+        print(lr_acc, bdt_acc)
+        self.write_json({'acc': [lr_acc, bdt_acc]})
+        # self.write_json({'bdtAcc': bdt_acc})
+
+    def getTrainData(self):
+        # convert data into sframe data
+        features=[]
+        labels=[]
+        for a in self.db.images.find():
+            features.append([float(val) for val in a['feature']])
+            labels.append(a['label'])
+        X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size = .2, random_state = 1, stratify = labels)
+        train_data = {'target':y_train, 'sequence':np.array(X_train)}
+        test_data = {'target':y_test, 'sequence':np.array(X_test)}
+        return tc.SFrame(data=train_data), tc.SFrame(data=test_data)

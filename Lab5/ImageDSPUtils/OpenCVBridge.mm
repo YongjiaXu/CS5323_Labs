@@ -285,7 +285,6 @@ using namespace cv;
 // http://stackoverflow.com/questions/30867351/best-way-to-create-a-mat-from-a-ciimage
 // http://stackoverflow.com/questions/10254141/how-to-convert-from-cvmat-to-uiimage-in-objective-c
 
-
 -(void) setImage:(CIImage*)ciFrameImage
       withBounds:(CGRect)faceRectIn
       andContext:(CIContext*)context{
@@ -457,6 +456,22 @@ using namespace cv;
 -(int*) getColorChannels{
     cv::Mat image_copy;
     Scalar avgPixelIntensity;
+    
+    cvtColor(_image, image_copy, CV_BGRA2RGB); // From GBRA to RGB
+    avgPixelIntensity = cv::mean( image_copy );     // Find the average color matrix
+    static int channels[3];
+    channels[0] = avgPixelIntensity.val[0]; // Blue
+    channels[1] = avgPixelIntensity.val[1]; // Green
+    channels[2] = avgPixelIntensity.val[2]; // Red
+    return channels;
+}
+
+-(int*) getPixels: (CIImage*) ciImage{
+    cv::Mat image_copy;
+    Scalar avgPixelIntensity;
+    
+    cv::Mat cvMat(1242, 1242, CV_8UC4); // 8 bits per component, 4 channels
+    _image = cvMat;
     
     cvtColor(_image, image_copy, CV_BGRA2RGB); // From GBRA to RGB
     avgPixelIntensity = cv::mean( image_copy );     // Find the average color matrix

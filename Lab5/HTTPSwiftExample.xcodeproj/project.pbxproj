@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A323FDEB273F0E6B00AF1283 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A323FDEA273F0E6B00AF1283 /* opencv2.framework */; };
 		A323FDF1273F0EFD00AF1283 /* OpenCVBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = A323FDEE273F0EFD00AF1283 /* OpenCVBridge.mm */; };
 		A323FDF2273F0EFD00AF1283 /* VideoAnalgesic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323FDF0273F0EFD00AF1283 /* VideoAnalgesic.swift */; };
 		B67483DB1ACA2D6800A9970E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67483DA1ACA2D6800A9970E /* AppDelegate.swift */; };
@@ -16,12 +15,12 @@
 		B67483E21ACA2D6800A9970E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B67483E11ACA2D6800A9970E /* Images.xcassets */; };
 		B67483E51ACA2D6800A9970E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67483E31ACA2D6800A9970E /* LaunchScreen.xib */; };
 		B694B01A1FA377E4009A4277 /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B694B0191FA377E4009A4277 /* RingBuffer.swift */; };
-		C28EC98F273CA06900350A35 /* PickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28EC98E273CA06900350A35 /* PickerTextField.swift */; };
+		C205093D274048FD000E2939 /* ServerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C205093C274048FD000E2939 /* ServerHandler.swift */; };
+		C2FFEA9B273F14D20098CAA2 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2FFEA9A273F14D20098CAA2 /* opencv2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A323FDE7273F094000AF1283 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = ../../ImageLab/ImageLab/PrefixHeader.pch; sourceTree = "<group>"; };
-		A323FDEA273F0E6B00AF1283 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ImageDSPUtils/opencv2.framework; sourceTree = "<group>"; };
 		A323FDEC273F0EFC00AF1283 /* HTTPSwiftExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HTTPSwiftExample-Bridging-Header.h"; sourceTree = "<group>"; };
 		A323FDEE273F0EFD00AF1283 /* OpenCVBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = OpenCVBridge.mm; path = ImageDSPUtils/OpenCVBridge.mm; sourceTree = SOURCE_ROOT; };
 		A323FDEF273F0EFD00AF1283 /* OpenCVBridge.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = OpenCVBridge.hh; path = ImageDSPUtils/OpenCVBridge.hh; sourceTree = SOURCE_ROOT; };
@@ -34,7 +33,8 @@
 		B67483E11ACA2D6800A9970E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B67483E41ACA2D6800A9970E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		B694B0191FA377E4009A4277 /* RingBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingBuffer.swift; sourceTree = "<group>"; };
-		C28EC98E273CA06900350A35 /* PickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerTextField.swift; sourceTree = "<group>"; };
+		C205093C274048FD000E2939 /* ServerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerHandler.swift; sourceTree = "<group>"; };
+		C2FFEA9A273F14D20098CAA2 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../ImageLab/ImageDSPUtils/opencv2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A323FDEB273F0E6B00AF1283 /* opencv2.framework in Frameworks */,
+				C2FFEA9B273F14D20098CAA2 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,7 +52,7 @@
 		B67483CC1ACA2D6800A9970E = {
 			isa = PBXGroup;
 			children = (
-				A323FDEA273F0E6B00AF1283 /* opencv2.framework */,
+				C2FFEA9A273F14D20098CAA2 /* opencv2.framework */,
 				B67483D71ACA2D6800A9970E /* HTTPSwiftExample */,
 				B67483D61ACA2D6800A9970E /* Products */,
 			);
@@ -75,9 +75,9 @@
 				B67483DA1ACA2D6800A9970E /* AppDelegate.swift */,
 				A323FDE7273F094000AF1283 /* PrefixHeader.pch */,
 				B67483DC1ACA2D6800A9970E /* ViewController.swift */,
+				C205093C274048FD000E2939 /* ServerHandler.swift */,
 				B694B0191FA377E4009A4277 /* RingBuffer.swift */,
 				B67483DE1ACA2D6800A9970E /* Main.storyboard */,
-				C28EC98E273CA06900350A35 /* PickerTextField.swift */,
 				B67483E11ACA2D6800A9970E /* Images.xcassets */,
 				B67483E31ACA2D6800A9970E /* LaunchScreen.xib */,
 				B67483D81ACA2D6800A9970E /* Supporting Files */,
@@ -170,8 +170,8 @@
 				B67483DD1ACA2D6800A9970E /* ViewController.swift in Sources */,
 				B67483DB1ACA2D6800A9970E /* AppDelegate.swift in Sources */,
 				B694B01A1FA377E4009A4277 /* RingBuffer.swift in Sources */,
+				C205093D274048FD000E2939 /* ServerHandler.swift in Sources */,
 				A323FDF2273F0EFD00AF1283 /* VideoAnalgesic.swift in Sources */,
-				C28EC98F273CA06900350A35 /* PickerTextField.swift in Sources */,
 				A323FDF1273F0EFD00AF1283 /* OpenCVBridge.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,6 +229,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -285,6 +286,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

@@ -26,6 +26,7 @@ int recordframes[3][100];       // A container to store those frames.
       withBounds:(CGRect)rect
       andContext:(CIContext*)context;
 
+
 //get the image raw opencv
 -(CIImage*)getImage;
 
@@ -43,4 +44,5 @@ int recordframes[3][100];       // A container to store those frames.
 -(bool)processFinger;           // Created a function called process Finger
 
 -(int*)getColorChannels;
+-(int*)getpixels: (CIImage*) ciImage;
 @end
