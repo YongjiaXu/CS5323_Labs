@@ -1,6 +1,6 @@
 # Lab 5 
-This lab uses http server as well as machine learning aspects.
-
+This lab uses http server as well as machine learning aspects.\
+Video link: https://www.dropbox.com/sh/evo6y8yigxzrvk4/AADC4z7Isd41BzQdPWV7HSeXa?dl=0
 ## Some instructions
 - Add image
   - Images are taken from the camera. Editing is allowed for cropping and zooming in the pictures taken.
