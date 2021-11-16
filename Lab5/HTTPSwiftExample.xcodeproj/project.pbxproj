@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A323FDF1273F0EFD00AF1283 /* OpenCVBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = A323FDEE273F0EFD00AF1283 /* OpenCVBridge.mm */; };
-		A323FDF2273F0EFD00AF1283 /* VideoAnalgesic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323FDF0273F0EFD00AF1283 /* VideoAnalgesic.swift */; };
 		B67483DB1ACA2D6800A9970E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67483DA1ACA2D6800A9970E /* AppDelegate.swift */; };
 		B67483DD1ACA2D6800A9970E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67483DC1ACA2D6800A9970E /* ViewController.swift */; };
 		B67483E01ACA2D6800A9970E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B67483DE1ACA2D6800A9970E /* Main.storyboard */; };
@@ -16,15 +14,12 @@
 		B67483E51ACA2D6800A9970E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67483E31ACA2D6800A9970E /* LaunchScreen.xib */; };
 		B694B01A1FA377E4009A4277 /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B694B0191FA377E4009A4277 /* RingBuffer.swift */; };
 		C205093D274048FD000E2939 /* ServerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C205093C274048FD000E2939 /* ServerHandler.swift */; };
-		C2FFEA9B273F14D20098CAA2 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2FFEA9A273F14D20098CAA2 /* opencv2.framework */; };
+		C2C61FC72742D679006B6242 /* lr_model.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = C2C61FC52742D679006B6242 /* lr_model.mlmodel */; };
+		C2C61FC82742D679006B6242 /* bdt_model.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = C2C61FC62742D679006B6242 /* bdt_model.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A323FDE7273F094000AF1283 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = ../../ImageLab/ImageLab/PrefixHeader.pch; sourceTree = "<group>"; };
 		A323FDEC273F0EFC00AF1283 /* HTTPSwiftExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HTTPSwiftExample-Bridging-Header.h"; sourceTree = "<group>"; };
-		A323FDEE273F0EFD00AF1283 /* OpenCVBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = OpenCVBridge.mm; path = ImageDSPUtils/OpenCVBridge.mm; sourceTree = SOURCE_ROOT; };
-		A323FDEF273F0EFD00AF1283 /* OpenCVBridge.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = OpenCVBridge.hh; path = ImageDSPUtils/OpenCVBridge.hh; sourceTree = SOURCE_ROOT; };
-		A323FDF0273F0EFD00AF1283 /* VideoAnalgesic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoAnalgesic.swift; path = ImageDSPUtils/VideoAnalgesic.swift; sourceTree = SOURCE_ROOT; };
 		B67483D51ACA2D6800A9970E /* HTTPSwiftExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HTTPSwiftExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B67483D91ACA2D6800A9970E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B67483DA1ACA2D6800A9970E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -34,6 +29,8 @@
 		B67483E41ACA2D6800A9970E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		B694B0191FA377E4009A4277 /* RingBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingBuffer.swift; sourceTree = "<group>"; };
 		C205093C274048FD000E2939 /* ServerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerHandler.swift; sourceTree = "<group>"; };
+		C2C61FC52742D679006B6242 /* lr_model.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = lr_model.mlmodel; sourceTree = "<group>"; };
+		C2C61FC62742D679006B6242 /* bdt_model.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = bdt_model.mlmodel; sourceTree = "<group>"; };
 		C2FFEA9A273F14D20098CAA2 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../ImageLab/ImageDSPUtils/opencv2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -42,7 +39,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2FFEA9B273F14D20098CAA2 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,11 +65,9 @@
 		B67483D71ACA2D6800A9970E /* HTTPSwiftExample */ = {
 			isa = PBXGroup;
 			children = (
-				A323FDEF273F0EFD00AF1283 /* OpenCVBridge.hh */,
-				A323FDEE273F0EFD00AF1283 /* OpenCVBridge.mm */,
-				A323FDF0273F0EFD00AF1283 /* VideoAnalgesic.swift */,
+				C2C61FC62742D679006B6242 /* bdt_model.mlmodel */,
+				C2C61FC52742D679006B6242 /* lr_model.mlmodel */,
 				B67483DA1ACA2D6800A9970E /* AppDelegate.swift */,
-				A323FDE7273F094000AF1283 /* PrefixHeader.pch */,
 				B67483DC1ACA2D6800A9970E /* ViewController.swift */,
 				C205093C274048FD000E2939 /* ServerHandler.swift */,
 				B694B0191FA377E4009A4277 /* RingBuffer.swift */,
@@ -170,9 +164,9 @@
 				B67483DD1ACA2D6800A9970E /* ViewController.swift in Sources */,
 				B67483DB1ACA2D6800A9970E /* AppDelegate.swift in Sources */,
 				B694B01A1FA377E4009A4277 /* RingBuffer.swift in Sources */,
+				C2C61FC82742D679006B6242 /* bdt_model.mlmodel in Sources */,
+				C2C61FC72742D679006B6242 /* lr_model.mlmodel in Sources */,
 				C205093D274048FD000E2939 /* ServerHandler.swift in Sources */,
-				A323FDF2273F0EFD00AF1283 /* VideoAnalgesic.swift in Sources */,
-				A323FDF1273F0EFD00AF1283 /* OpenCVBridge.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +314,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = SMU.HTTPSwiftExampleBX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "HTTPSwiftExample/HTTPSwiftExample-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -341,7 +335,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = SMU.HTTPSwiftExampleBX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "HTTPSwiftExample/HTTPSwiftExample-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

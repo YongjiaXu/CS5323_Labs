@@ -9,14 +9,19 @@
 import Foundation
 import UIKit
 
-let SERVER_URL = "http://10.9.165.78:8000"
+//let SERVER_URL = "http://10.9.165.78:8000"
+let SERVER_URL = "http://10.8.103.118:8000"
+
 
 class ServerHalder: NSObject, URLSessionDelegate {
+    
+    // initialize server session
     lazy var session: URLSession = {
         let sessionConfig = URLSessionConfiguration.ephemeral
         
-        sessionConfig.timeoutIntervalForRequest = 5.0
-        sessionConfig.timeoutIntervalForResource = 8.0
+        // more time for http to train the model and send it back
+        sessionConfig.timeoutIntervalForRequest = 15.0
+        sessionConfig.timeoutIntervalForResource = 15.0
         sessionConfig.httpMaximumConnectionsPerHost = 1
         
         return URLSession(configuration: sessionConfig,
@@ -26,11 +31,13 @@ class ServerHalder: NSObject, URLSessionDelegate {
     
     let operationQueue = OperationQueue()
     var enoughData:Bool = false
-    var resultLabel = ""
+    var resultLabel = "None" // default to None -- for further error handling if server is not available
     var enoughDataToCompare:Bool = false
     var lrAcc = ""
     var bdtAcc = ""
     
+    
+    // convertDictionaryToData and convertDataToDictionary copied from in class assignment
     func convertDictionaryToData(with jsonUpload:NSDictionary) -> Data?{
         do { // try to make JSON and deal with errors using do/catch block
             let requestBody = try JSONSerialization.data(withJSONObject: jsonUpload, options:JSONSerialization.WritingOptions.prettyPrinted)
@@ -60,19 +67,17 @@ class ServerHalder: NSObject, URLSessionDelegate {
         }
     }
     
+    // end point for adding and image, takes in the image array(feature) and the label
     func addImage(_ image: [Float], label: String) {
         let baseURL = "\(SERVER_URL)/AddImage"
         let postURL = URL(string: "\(baseURL)")
-        
         var request = URLRequest(url: postURL!)
-        
         let jsonUpload:NSDictionary = ["feature": image, "label": "\(label)"]
-        
         let requestBody:Data? = self.convertDictionaryToData(with:jsonUpload)
         
         request.httpMethod = "POST"
         request.httpBody = requestBody
-        
+        let sem = DispatchSemaphore(value: 0) // semaphore is used to wait for the response
         let postTask : URLSessionDataTask = self.session.dataTask(with: request,
             completionHandler:{(data, response, error) in
                 if(error != nil){
@@ -82,14 +87,11 @@ class ServerHalder: NSObject, URLSessionDelegate {
                 }
                 else{
                     print("Upload successful!")
-//                    let jsonDictionary = self.convertDataToDictionary(with: data)
-                    
-//                    print(jsonDictionary["feature"]!)
-//                    print(jsonDictionary["label"]!)
                 }
+            sem.signal()
         })
-        
         postTask.resume() // start the task
+        sem.wait()
     }
     
     func checkEnoughLabel(){
@@ -99,14 +101,18 @@ class ServerHalder: NSObject, URLSessionDelegate {
         // https://stackoverflow.com/questions/42254114/how-can-we-wait-for-http-requests-to-finish
         // wait for the http request to check if there is enough Data
         let sem = DispatchSemaphore(value: 0)
-
         let dataTask : URLSessionDataTask = self.session.dataTask(with: request,
             completionHandler:{(data, response, error) in
                 if(error != nil){
-                    print("Response:\n%@",response!)
+                    if(response != nil) {
+                        print("Response:\n%@",response!)
+                    } else {
+                        print("no response")
+                    }
                 }
                 else{
                     let jsonDictionary = self.convertDataToDictionary(with: data)
+                    // receive the enough flag and update it in the server
                     if let enoughData = jsonDictionary["enough"]{
                         if (enoughData as! Bool == true) {
                             self.enoughData = true
@@ -150,14 +156,18 @@ class ServerHalder: NSObject, URLSessionDelegate {
         // https://stackoverflow.com/questions/42254114/how-can-we-wait-for-http-requests-to-finish
         // wait for the http request to check if there is enough Data
         let sem = DispatchSemaphore(value: 0)
-
         let dataTask : URLSessionDataTask = self.session.dataTask(with: request,
             completionHandler:{(data, response, error) in
                 if(error != nil){
-                    print("Response:\n%@",response!)
+                    if(response != nil) {
+                        print("Response:\n%@",response!)
+                    } else {
+                        print("no response")
+                    }
                 }
                 else{
                     let jsonDictionary = self.convertDataToDictionary(with: data)
+                    // receive the valid flag and update the class variable
                     if let enoughDataToCompare = jsonDictionary["valid"]{
                         if (enoughDataToCompare as! Bool == true) {
                             self.enoughDataToCompare = true
@@ -187,7 +197,7 @@ class ServerHalder: NSObject, URLSessionDelegate {
                 else{
                     print("Trained successful!")
                     let jsonDictionary = self.convertDataToDictionary(with: data)
-                    
+                    // receive acc array(with 2 values) and update the class variables
                     if let acc = jsonDictionary["acc"]{
                         let accArr = acc as! Array<Any>
                         self.lrAcc = accArr[0] as! String
@@ -201,14 +211,12 @@ class ServerHalder: NSObject, URLSessionDelegate {
         sem.wait()
     }
     
+    // predict takes in the image array and the model selected
     func predict(image: [Float], model: String) {
         let baseURL = "\(SERVER_URL)/Predict"
         let postURL = URL(string: "\(baseURL)")
-        
         var request = URLRequest(url: postURL!)
-        
         let jsonUpload:NSDictionary = ["feature": image, "model": "\(model)"]
-        
         let requestBody:Data? = self.convertDictionaryToData(with:jsonUpload)
         
         request.httpMethod = "POST"
@@ -223,6 +231,7 @@ class ServerHalder: NSObject, URLSessionDelegate {
                 }
                 else{
                     let jsonDictionary = self.convertDataToDictionary(with: data)
+                    // update the resultLabel
                     if let result = jsonDictionary["result"]{
                         self.resultLabel = result as! String
                     }
